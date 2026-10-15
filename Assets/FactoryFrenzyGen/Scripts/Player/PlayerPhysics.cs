@@ -49,6 +49,7 @@ public class PlayerPhysics : MonoBehaviour
 
     public void Respawn()
     {
+        Debug.Log("PlayerPhysics: respawn at " + respawnPosition);
         pushVelocity = Vector3.zero;
 
         // the CharacterController must be off to teleport the player

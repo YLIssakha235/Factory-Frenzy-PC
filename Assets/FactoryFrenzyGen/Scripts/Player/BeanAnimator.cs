@@ -9,13 +9,16 @@ public class BeanAnimator : MonoBehaviour
 
     float walkTime = 0;        // advances when we walk, used for the leg swing
     float squash = 0;          // squash when we land
-    float flipTime = -1;       // -1 = not flipping
+    float hitTime = -1;        // -1 = not hit
+    Vector3 hitAxis;           // the axis the bean tumbles around
     float celebrateTime = -1;  // -1 = not celebrating
     bool wasOnGround = true;
+    Vector3 lastPosition;      // where the bean was in the last frame
 
     void Start()
     {
         controller = GetComponentInParent<CharacterController>(); // can be null in a test scene
+        lastPosition = transform.position;
         visual = FindChild("Visual");
         armL = FindChild("ArmL");
         armR = FindChild("ArmR");
@@ -44,7 +47,12 @@ public class BeanAnimator : MonoBehaviour
         Vector3 sideways = new Vector3(force.x, 0, force.z);
         if (sideways.magnitude > 8) // only big sideways hits (not the trampoline)
         {
-            flipTime = 0;
+            hitTime = 0;
+            squash = 0.35f; // squashed by the impact
+
+            // tumble in the direction of the push (in the bean's own space)
+            Vector3 localPush = transform.InverseTransformDirection(sideways.normalized);
+            hitAxis = Vector3.Cross(Vector3.up, localPush);
         }
     }
 
@@ -58,12 +66,18 @@ public class BeanAnimator : MonoBehaviour
     {
         if (visual == null || armL == null || armR == null || legL == null || legR == null) return;
 
-        // without the player around it (test scene), the bean just stands still
+        // our real speed = how far we moved since the last frame
+        // (so when the player is frozen, the speed is 0 and the bean stops walking)
         Vector3 velocity = Vector3.zero;
-        bool onGround = true;
-        if (controller != null)
+        if (Time.deltaTime > 0)
         {
-            velocity = controller.velocity;
+            velocity = (transform.position - lastPosition) / Time.deltaTime;
+        }
+        lastPosition = transform.position;
+
+        bool onGround = true;
+        if (controller != null && controller.enabled)
+        {
             onGround = controller.isGrounded;
         }
         float speed = new Vector3(velocity.x, 0, velocity.z).magnitude;
@@ -89,16 +103,7 @@ public class BeanAnimator : MonoBehaviour
         wasOnGround = onGround;
         squash = Mathf.MoveTowards(squash, 0, Time.deltaTime * 1.5f);
 
-        // 4. HIT: one forward flip in 0.6 seconds
-        float flip = 0;
-        if (flipTime >= 0)
-        {
-            flipTime += Time.deltaTime;
-            flip = flipTime / 0.6f * 360;
-            if (flipTime > 0.6f) flipTime = -1;
-        }
-
-        // 5. CELEBRATE: hop and wave for 3 seconds
+        // 4. CELEBRATE: hop and wave for 3 seconds
         float hop = 0;
         if (celebrateTime >= 0)
         {
@@ -109,13 +114,46 @@ public class BeanAnimator : MonoBehaviour
             if (celebrateTime > 3) celebrateTime = -1;
         }
 
+        // 5. HIT: tumble in the push direction with arms and legs flailing, then a dizzy wobble
+        Quaternion bodyRotation = Quaternion.identity;
+        if (hitTime >= 0)
+        {
+            hitTime += Time.deltaTime;
+
+            if (hitTime < 0.8f)
+            {
+                // one full turn: fast at the start, slower at the end
+                float u = hitTime / 0.8f;
+                float angle = 360 * (1 - (1 - u) * (1 - u));
+                bodyRotation = Quaternion.AngleAxis(angle, hitAxis);
+
+                // arms and legs flail
+                armLeft = -90 + Mathf.Sin(hitTime * 40) * 60;
+                armRight = -90 - Mathf.Sin(hitTime * 40) * 60;
+                swing = Mathf.Sin(hitTime * 35) * 50;
+            }
+            else if (hitTime < 1.4f)
+            {
+                // dizzy: wobble left and right, smaller and smaller
+                float fade = 1 - (hitTime - 0.8f) / 0.6f;
+                bodyRotation = Quaternion.Euler(0, 0, Mathf.Sin(hitTime * 20) * 15 * fade);
+            }
+            else
+            {
+                hitTime = -1; // finished
+            }
+        }
+
         // apply everything
         legL.localRotation = Quaternion.Euler(swing, 0, 0);
         legR.localRotation = Quaternion.Euler(-swing, 0, 0);
         armL.localRotation = Quaternion.Euler(armLeft, 0, 0);
         armR.localRotation = Quaternion.Euler(armRight, 0, 0);
         visual.localScale = new Vector3(1 + squash, 1 - squash, 1 + squash);
-        visual.localPosition = new Vector3(0, hop, 0);
-        visual.localRotation = Quaternion.Euler(flip, 0, 0);
+
+        // turn around the belly (0.85 m high), not around the feet
+        Vector3 belly = new Vector3(0, 0.85f, 0);
+        visual.localRotation = bodyRotation;
+        visual.localPosition = belly - bodyRotation * belly + new Vector3(0, hop, 0);
     }
 }
