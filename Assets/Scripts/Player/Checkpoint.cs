@@ -9,8 +9,15 @@ public class Checkpoint : MonoBehaviour
 
     void Start()
     {
-        // "RespawnPoint" is a child of the Checkpoint prefab
-        respawnPoint = transform.parent.Find("RespawnPoint");
+        // "RespawnPoint" is next to this object in the Checkpoint prefab
+        if (transform.parent != null)
+        {
+            respawnPoint = transform.parent.Find("RespawnPoint");
+        }
+        if (respawnPoint == null)
+        {
+            respawnPoint = transform; // if not found, respawn here
+        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -18,8 +25,11 @@ public class Checkpoint : MonoBehaviour
         if (activated) return;                   // only once
         if (!other.CompareTag("Player")) return; // only the player
 
+        PlayerPhysics player = other.GetComponent<PlayerPhysics>();
+        if (player == null) return;
+
         activated = true;
-        other.GetComponent<PlayerPhysics>().SetCheckpoint(respawnPoint.position);
+        player.SetCheckpoint(respawnPoint.position);
 
         // turn the arch green
         CheckpointFX fx = GetComponentInParent<CheckpointFX>();

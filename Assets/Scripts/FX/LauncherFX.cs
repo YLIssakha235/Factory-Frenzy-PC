@@ -11,10 +11,24 @@ public class LauncherFX : MonoBehaviour
 
     void Start()
     {
-        eye = transform.Find("Head/Eye").GetComponent<Renderer>();
-        barrel = transform.Find("Head/Barrel");
-        barrelStart = barrel.localPosition;
+        Transform eyeObject = FindChild("Eye");
+        if (eyeObject != null) eye = eyeObject.GetComponent<Renderer>();
+        else Debug.LogWarning("LauncherFX: no child called Eye in " + name);
+
+        barrel = FindChild("Barrel");
+        if (barrel != null) barrelStart = barrel.localPosition;
+        else Debug.LogWarning("LauncherFX: no child called Barrel in " + name);
+
         ShowSearch();
+    }
+
+    Transform FindChild(string childName)
+    {
+        foreach (Transform t in GetComponentsInChildren<Transform>())
+        {
+            if (t.name == childName) return t;
+        }
+        return null;
     }
 
     public void ShowSearch() { SetEyeColor(Color.yellow); }
@@ -23,7 +37,9 @@ public class LauncherFX : MonoBehaviour
 
     void SetEyeColor(Color color)
     {
+        if (eye == null) return;
         eye.material.color = color;
+        eye.material.EnableKeyword("_EMISSION");
         eye.material.SetColor("_EmissionColor", color);
     }
 
@@ -34,11 +50,13 @@ public class LauncherFX : MonoBehaviour
 
     void Update()
     {
+        if (barrel == null) return;
+
         if (timer < 0.2f)
         {
             timer += Time.deltaTime;
             // barrel goes back, then returns in 0.2 seconds
-            float back = 1 - timer / 0.2f;
+            float back = Mathf.Max(0, 1 - timer / 0.2f);
             barrel.localPosition = barrelStart - new Vector3(0, 0, 0.3f * back);
         }
     }

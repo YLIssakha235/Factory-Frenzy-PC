@@ -1,11 +1,12 @@
 using UnityEngine;
 
-// Put this on the player (PlayerArmature).
+// Put this on PlayerArmature (the object with the CharacterController).
+// Starter Assets moves the player with the keyboard; this script adds the pushes from traps.
 // Traps use AddImpulse / AddForce to push the player.
 // Checkpoints use SetCheckpoint, the kill zone uses Respawn.
 public class PlayerPhysics : MonoBehaviour
 {
-    public float gravity = -20f;   // pulls the push back down
+    public float gravity = -20f;   // slows down an upward push (trampoline)
     public float friction = 3f;    // how fast a sideways push stops
 
     CharacterController controller;
@@ -15,6 +16,10 @@ public class PlayerPhysics : MonoBehaviour
     void Start()
     {
         controller = GetComponent<CharacterController>();
+        if (controller == null)
+        {
+            Debug.LogWarning("PlayerPhysics: put this script on the player (the object with the CharacterController).");
+        }
         respawnPosition = transform.position; // the start is the first checkpoint
     }
 
@@ -47,25 +52,33 @@ public class PlayerPhysics : MonoBehaviour
         pushVelocity = Vector3.zero;
 
         // the CharacterController must be off to teleport the player
-        controller.enabled = false;
+        if (controller != null) controller.enabled = false;
         transform.position = respawnPosition;
-        controller.enabled = true;
+        if (controller != null) controller.enabled = true;
     }
 
     void Update()
     {
-        // move the player with the push
+        if (controller == null) return;
+
+        // no push from a trap: do nothing, Starter Assets moves the player normally
+        if (pushVelocity.magnitude < 0.1f)
+        {
+            pushVelocity = Vector3.zero;
+            return;
+        }
+
+        // move the player with the push (added to the normal movement)
         controller.Move(pushVelocity * Time.deltaTime);
 
-        // slow down the sideways push
+        // the sideways push slows down little by little
         pushVelocity.x -= pushVelocity.x * friction * Time.deltaTime;
         pushVelocity.z -= pushVelocity.z * friction * Time.deltaTime;
 
-        // gravity on the upward push
+        // the upward push slows down because of gravity
+        // (it never goes below 0: falling is already done by Starter Assets)
         pushVelocity.y += gravity * Time.deltaTime;
-
-        // on the ground: no more falling push
-        if (controller.isGrounded && pushVelocity.y < 0)
+        if (pushVelocity.y < 0)
         {
             pushVelocity.y = 0;
         }

@@ -15,12 +15,27 @@ public class BeanAnimator : MonoBehaviour
 
     void Start()
     {
-        controller = GetComponentInParent<CharacterController>();
-        visual = transform.Find("Visual");
-        armL = visual.Find("ArmL");
-        armR = visual.Find("ArmR");
-        legL = visual.Find("LegL");
-        legR = visual.Find("LegR");
+        controller = GetComponentInParent<CharacterController>(); // can be null in a test scene
+        visual = FindChild("Visual");
+        armL = FindChild("ArmL");
+        armR = FindChild("ArmR");
+        legL = FindChild("LegL");
+        legR = FindChild("LegR");
+
+        if (visual == null || armL == null || armR == null || legL == null || legR == null)
+        {
+            Debug.LogWarning("BeanAnimator: put this script on the PlayerBean (it needs Visual, ArmL, ArmR, LegL, LegR).");
+        }
+    }
+
+    // looks for a child with this name, at any depth
+    Transform FindChild(string childName)
+    {
+        foreach (Transform t in GetComponentsInChildren<Transform>())
+        {
+            if (t.name == childName) return t;
+        }
+        return null;
     }
 
     // Called by PlayerPhysics when a trap pushes us
@@ -41,9 +56,17 @@ public class BeanAnimator : MonoBehaviour
 
     void Update()
     {
-        Vector3 velocity = controller.velocity;
+        if (visual == null || armL == null || armR == null || legL == null || legR == null) return;
+
+        // without the player around it (test scene), the bean just stands still
+        Vector3 velocity = Vector3.zero;
+        bool onGround = true;
+        if (controller != null)
+        {
+            velocity = controller.velocity;
+            onGround = controller.isGrounded;
+        }
         float speed = new Vector3(velocity.x, 0, velocity.z).magnitude;
-        bool onGround = controller.isGrounded;
 
         // 1. WALK / RUN: legs and arms swing, faster when we go faster
         walkTime += Time.deltaTime * speed * 2.5f;

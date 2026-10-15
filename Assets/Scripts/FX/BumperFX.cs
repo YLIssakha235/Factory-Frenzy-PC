@@ -10,8 +10,18 @@ public class BumperFX : MonoBehaviour
 
     void Start()
     {
-        body = transform.Find("Body");
-        normalSize = body.localScale;
+        body = FindChild("Body");
+        if (body != null) normalSize = body.localScale;
+        else Debug.LogWarning("BumperFX: no child called Body in " + name);
+    }
+
+    Transform FindChild(string childName)
+    {
+        foreach (Transform t in GetComponentsInChildren<Transform>())
+        {
+            if (t.name == childName) return t;
+        }
+        return null;
     }
 
     public void Pulse()
@@ -21,11 +31,13 @@ public class BumperFX : MonoBehaviour
 
     void Update()
     {
+        if (body == null) return;
+
         if (timer < 0.3f)
         {
             timer += Time.deltaTime;
             // big at the start, back to normal after 0.3 seconds
-            float big = 1 - timer / 0.3f;
+            float big = Mathf.Max(0, 1 - timer / 0.3f);
             body.localScale = new Vector3(normalSize.x * (1 + 0.35f * big), normalSize.y, normalSize.z * (1 + 0.35f * big));
         }
     }

@@ -8,11 +8,24 @@ public class FanFX : MonoBehaviour
 
     void Start()
     {
-        blades = transform.Find("Hub/Blades");
+        blades = FindChild("Blades");
+        if (blades == null) Debug.LogWarning("FanFX: no child called Blades in " + name);
+    }
+
+    Transform FindChild(string childName)
+    {
+        foreach (Transform t in GetComponentsInChildren<Transform>())
+        {
+            if (t.name == childName) return t;
+        }
+        return null;
     }
 
     void Update()
     {
-        blades.Rotate(0, 0, speed * Time.deltaTime);
+        if (blades != null)
+        {
+            blades.Rotate(0, 0, speed * Time.deltaTime);
+        }
     }
 }
