@@ -1,0 +1,330 @@
+{
+  "levelName": "Level 2 - Bumper Alley",
+  "elements": [
+    {
+      "type": "Start",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "locked": false,
+      "endPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "travelTime": 0
+    },
+    {
+      "type": "Classic",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 10
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "scale": {
+        "x": 0.8,
+        "y": 1,
+        "z": 3.5
+      },
+      "locked": false,
+      "endPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "travelTime": 0
+    },
+    {
+      "type": "Bumper",
+      "position": {
+        "x": -0.8,
+        "y": 0.3,
+        "z": 6
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "locked": false,
+      "endPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "travelTime": 0
+    },
+    {
+      "type": "Bumper",
+      "position": {
+        "x": 0.8,
+        "y": 0.3,
+        "z": 10
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "locked": false,
+      "endPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "travelTime": 0
+    },
+    {
+      "type": "Bumper",
+      "position": {
+        "x": -0.8,
+        "y": 0.3,
+        "z": 14
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "locked": false,
+      "endPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "travelTime": 0
+    },
+    {
+      "type": "Checkpoint",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 21
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "locked": false,
+      "endPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "travelTime": 0
+    },
+    {
+      "type": "Classic",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 31
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "scale": {
+        "x": 0.5,
+        "y": 1,
+        "z": 3
+      },
+      "locked": false,
+      "endPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "travelTime": 0
+    },
+    {
+      "type": "Classic",
+      "position": {
+        "x": -4.5,
+        "y": 0,
+        "z": 31
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "scale": {
+        "x": 0.5,
+        "y": 1,
+        "z": 0.5
+      },
+      "locked": false,
+      "endPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "travelTime": 0
+    },
+    {
+      "type": "Fan",
+      "position": {
+        "x": -4.5,
+        "y": 0.3,
+        "z": 31
+      },
+      "rotation": {
+        "x": 0,
+        "y": 90,
+        "z": 0
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "locked": false,
+      "endPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "travelTime": 0
+    },
+    {
+      "type": "Moving",
+      "position": {
+        "x": -2,
+        "y": 0,
+        "z": 41.5
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "locked": false,
+      "endPosition": {
+        "x": 2,
+        "y": 0,
+        "z": 41.5
+      },
+      "travelTime": 2.5
+    },
+    {
+      "type": "Moving",
+      "position": {
+        "x": 2,
+        "y": 0,
+        "z": 47
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "locked": false,
+      "endPosition": {
+        "x": -2,
+        "y": 0,
+        "z": 47
+      },
+      "travelTime": 2.5
+    },
+    {
+      "type": "Checkpoint",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 53
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "locked": false,
+      "endPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "travelTime": 0
+    },
+    {
+      "type": "Finish",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 60
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "locked": false,
+      "endPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "travelTime": 0
+    }
+  ]
+}

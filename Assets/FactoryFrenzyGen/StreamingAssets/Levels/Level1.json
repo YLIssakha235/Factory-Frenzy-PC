@@ -1,0 +1,280 @@
+{
+  "levelName": "Level 1 - Tutorial Factory",
+  "elements": [
+    {
+      "type": "Start",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "locked": false,
+      "endPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "travelTime": 0
+    },
+    {
+      "type": "Classic",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 7
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "locked": false,
+      "endPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "travelTime": 0
+    },
+    {
+      "type": "Classic",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 12.5
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "scale": {
+        "x": 0.75,
+        "y": 1,
+        "z": 0.75
+      },
+      "locked": false,
+      "endPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "travelTime": 0
+    },
+    {
+      "type": "Classic",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 18
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "scale": {
+        "x": 0.75,
+        "y": 1,
+        "z": 0.75
+      },
+      "locked": false,
+      "endPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "travelTime": 0
+    },
+    {
+      "type": "Moving",
+      "position": {
+        "x": -2.5,
+        "y": 0,
+        "z": 24
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "locked": false,
+      "endPosition": {
+        "x": 2.5,
+        "y": 0,
+        "z": 24
+      },
+      "travelTime": 3
+    },
+    {
+      "type": "Classic",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 30.5
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1.25
+      },
+      "locked": false,
+      "endPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "travelTime": 0
+    },
+    {
+      "type": "Checkpoint",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 37.5
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "locked": false,
+      "endPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "travelTime": 0
+    },
+    {
+      "type": "Trampoline",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 43
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "locked": false,
+      "endPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "travelTime": 0
+    },
+    {
+      "type": "Classic",
+      "position": {
+        "x": 0,
+        "y": 4,
+        "z": 47.5
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "locked": false,
+      "endPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "travelTime": 0
+    },
+    {
+      "type": "Classic",
+      "position": {
+        "x": 0,
+        "y": 4,
+        "z": 54
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "locked": false,
+      "endPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "travelTime": 0
+    },
+    {
+      "type": "Finish",
+      "position": {
+        "x": 0,
+        "y": 4,
+        "z": 61
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "locked": false,
+      "endPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "travelTime": 0
+    }
+  ]
+}
