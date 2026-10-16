@@ -92,6 +92,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4735064500714598264}
+  - component: {fileID: 453457348224530441}
   m_Layer: 0
   m_Name: Trampoline
   m_TagString: Untagged
@@ -126,6 +127,18 @@ Transform:
   - {fileID: 868737634557045829}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &453457348224530441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2923148964920014891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ca651a102fee58438d7c5b0186cd15a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3567073722562217781
 GameObject:
   m_ObjectHideFlags: 0
@@ -822,6 +835,7 @@ GameObject:
   m_Component:
   - component: {fileID: 868737634557045829}
   - component: {fileID: 1691026179663802380}
+  - component: {fileID: 2916913559372343353}
   m_Layer: 0
   m_Name: BounceTrigger
   m_TagString: Untagged
@@ -865,6 +879,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.4, y: 0.4, z: 2.4}
   m_Center: {x: 0, y: 0.6, z: 0}
+--- !u!114 &2916913559372343353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7578436080416204341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ead414a03d22cb4095a913cdb38e324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bounceForce: 30
 --- !u!1 &8315765937489756062
 GameObject:
   m_ObjectHideFlags: 0
