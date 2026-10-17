@@ -1,4 +1,5 @@
 using UnityEngine;
+using StarterAssets;
 
 public class TrampolineBounce : MonoBehaviour
 {
@@ -13,7 +14,8 @@ public class TrampolineBounce : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        PlayerPhysics player = other.GetComponent<PlayerPhysics>();
+        ThirdPersonController player =
+            other.GetComponent<ThirdPersonController>();
 
         if (player == null) return;
 
