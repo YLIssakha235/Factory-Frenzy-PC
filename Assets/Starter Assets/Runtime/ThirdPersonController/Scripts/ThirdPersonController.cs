@@ -279,9 +279,16 @@ namespace StarterAssets
             }
         }
 
+        // ajout d'une fonction addimpulse pour ajouter une impulsion verticale au joueur
+        public void AddImpulse(Vector3 impulse)
+        {
+            _verticalVelocity += impulse.y;
+        }
+
+        // modif pour que le joueur ne puisse pas sauter en l'air, on va ajouter un booléen grounded qui sera mis à true lorsque le joueur touche le sol et à false lorsqu'il est en l'air
         private void JumpAndGravity()
         {
-            if (Grounded)
+            if (Grounded && _verticalVelocity <= 0f)
             {
                 // reset the fall timeout timer
                 _fallTimeoutDelta = FallTimeout;
