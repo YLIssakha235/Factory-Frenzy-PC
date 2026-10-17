@@ -150,6 +150,9 @@ namespace StarterAssets
             // reset our timeouts on start
             _jumpTimeoutDelta = JumpTimeout;
             _fallTimeoutDelta = FallTimeout;
+
+            // set respawn position to the initial position of the player
+            _respawnPosition = transform.position;
         }
 
         private void Update()
@@ -283,6 +286,23 @@ namespace StarterAssets
         public void AddImpulse(Vector3 impulse)
         {
             _verticalVelocity += impulse.y;
+        }
+
+        // positon du joueur pour le respawn
+        private Vector3 _respawnPosition;
+
+        public void SetRespawnPosition(Vector3 position)
+        {
+            _respawnPosition = position;
+        }
+
+        public void Respawn()
+        {
+            _verticalVelocity = 0f;
+
+            _controller.enabled = false;
+            transform.position = _respawnPosition;
+            _controller.enabled = true;
         }
 
         // modif pour que le joueur ne puisse pas sauter en l'air, on va ajouter un booléen grounded qui sera mis à true lorsque le joueur touche le sol et à false lorsqu'il est en l'air
