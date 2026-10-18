@@ -114,6 +114,9 @@ namespace StarterAssets
         private Rigidbody currentPlatform;
         private Vector3 previousPlatformPosition;
 
+        // platform WindMovement
+        private Vector3 windVelocity = Vector3.zero;
+
         private bool IsCurrentDeviceMouse
         {
             get
@@ -304,8 +307,11 @@ namespace StarterAssets
                 }
             }
 
+            // wind movement
+            Vector3 windMovement = windVelocity * Time.deltaTime;
+
             // deplacement total 
-            _controller.Move(playerMovement + platformMovement);
+            _controller.Move(playerMovement + platformMovement + windMovement);
 
             // memorise la postion de la plf 
             if (currentPlatform != null)
@@ -320,6 +326,12 @@ namespace StarterAssets
                 _animator.SetFloat(_animIDSpeed, _animationBlend);
                 _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
             }
+        }
+
+        // WindMovement 
+        public void SetWindVelocity(Vector3 velocity)
+        {
+            windVelocity = velocity;
         }
 
         // ajout d'une fonction addimpulse pour ajouter une impulsion verticale au joueur
