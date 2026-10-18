@@ -117,6 +117,9 @@ namespace StarterAssets
         // platform WindMovement
         private Vector3 windVelocity = Vector3.zero;
 
+        // platform bumper
+        private Vector3 bumperVelocity = Vector3.zero;
+
         private bool IsCurrentDeviceMouse
         {
             get
@@ -310,8 +313,17 @@ namespace StarterAssets
             // wind movement
             Vector3 windMovement = windVelocity * Time.deltaTime;
 
+            // bumper movement
+            Vector3 bumperMovement = bumperVelocity * Time.deltaTime;
+
             // deplacement total 
-            _controller.Move(playerMovement + platformMovement + windMovement);
+            _controller.Move(playerMovement + platformMovement + windMovement + bumperMovement);
+
+            // ralentissent bumper
+            bumperVelocity = Vector3.MoveTowards(
+                bumperVelocity,
+                Vector3.zero,
+                8f * Time.deltaTime);
 
             // memorise la postion de la plf 
             if (currentPlatform != null)
@@ -338,6 +350,8 @@ namespace StarterAssets
         public void AddImpulse(Vector3 impulse)
         {
             _verticalVelocity += impulse.y;
+
+            bumperVelocity += new Vector3(impulse.x, 0f, impulse.z);
         }
 
         // positon du joueur pour le respawn

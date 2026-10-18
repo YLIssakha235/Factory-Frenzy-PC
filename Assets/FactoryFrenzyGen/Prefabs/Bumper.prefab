@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8899185166420768865}
+  - component: {fileID: 1221425060577204326}
   m_Layer: 0
   m_Name: Bumper
   m_TagString: Untagged
@@ -35,6 +36,18 @@ Transform:
   - {fileID: 3204053719630849512}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1221425060577204326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 358314990986295167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a0b77c9930befd4c87025654f28d52d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &386683229571725593
 GameObject:
   m_ObjectHideFlags: 0
@@ -130,6 +143,7 @@ GameObject:
   - component: {fileID: 680485046567964588}
   - component: {fileID: 5671351627088450894}
   - component: {fileID: 4434064392161609056}
+  - component: {fileID: 8221084501030533795}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -217,13 +231,27 @@ MeshCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &8221084501030533795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 664334804085144107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fa4014a4959cea4595b867b9c486637, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pushForce: 12
+  upwardForce: 3
 --- !u!1 &5505816828871162673
 GameObject:
   m_ObjectHideFlags: 0
