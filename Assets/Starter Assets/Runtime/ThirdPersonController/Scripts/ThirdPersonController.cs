@@ -110,6 +110,16 @@ namespace StarterAssets
 
         private bool _hasAnimator;
 
+        // platform moving
+        private Rigidbody currentPlatform;
+        private Vector3 previousPlatformPosition;
+
+        // platform WindMovement
+        private Vector3 windVelocity = Vector3.zero;
+
+        // platform bumper
+        private Vector3 bumperVelocity = Vector3.zero;
+
         private bool IsCurrentDeviceMouse
         {
             get
@@ -225,8 +235,14 @@ namespace StarterAssets
             // if there is no input, set the target speed to 0
             if (_input.move == Vector2.zero) targetSpeed = 0.0f;
 
+
+            Debug.Log("Input: " + _input.move +
+                      " | Speed: " + _speed +
+                      " | Animation: " + _animationBlend);
+
             // a reference to the players current horizontal velocity
-            float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
+            //float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
+            float currentHorizontalSpeed = _speed;
 
             float speedOffset = 0.1f;
             float inputMagnitude = _input.analogMovement ? _input.move.magnitude : 1f;
@@ -271,8 +287,50 @@ namespace StarterAssets
             Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
 
             // move the player
-            _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) +
-                             new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
+            //_controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) +
+            //                 new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
+
+            Vector3 playerMovement = targetDirection.normalized * (_speed * Time.deltaTime) +
+                                     new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime;
+
+            // platform moving
+            Vector3 platformMovement = Vector3.zero;
+
+            if (currentPlatform != null)
+            {
+                if (Grounded && _verticalVelocity <= 0f)
+                {
+                    platformMovement = currentPlatform.position - previousPlatformPosition;
+                    
+                }
+
+                else
+                {
+                    currentPlatform = null;
+                }
+            }
+
+            // wind movement
+            Vector3 windMovement = windVelocity * Time.deltaTime;
+
+            // bumper movement
+            Vector3 bumperMovement = bumperVelocity * Time.deltaTime;
+
+            // deplacement total 
+            _controller.Move(playerMovement + platformMovement + windMovement + bumperMovement);
+
+            // ralentissent bumper
+            bumperVelocity = Vector3.MoveTowards(
+                bumperVelocity,
+                Vector3.zero,
+                8f * Time.deltaTime);
+
+            // memorise la postion de la plf 
+            if (currentPlatform != null)
+            {
+                previousPlatformPosition = currentPlatform.position;
+            }
+
 
             // update animator if using character
             if (_hasAnimator)
@@ -282,10 +340,18 @@ namespace StarterAssets
             }
         }
 
+        // WindMovement 
+        public void SetWindVelocity(Vector3 velocity)
+        {
+            windVelocity = velocity;
+        }
+
         // ajout d'une fonction addimpulse pour ajouter une impulsion verticale au joueur
         public void AddImpulse(Vector3 impulse)
         {
             _verticalVelocity += impulse.y;
+
+            bumperVelocity += new Vector3(impulse.x, 0f, impulse.z);
         }
 
         // positon du joueur pour le respawn
@@ -303,6 +369,27 @@ namespace StarterAssets
             _controller.enabled = false;
             transform.position = _respawnPosition;
             _controller.enabled = true;
+        }
+
+        // detection de la collision entre joeur et platform moving
+        private void OnControllerColliderHit(ControllerColliderHit hit)
+            
+        {
+            Rigidbody platform = hit.collider.attachedRigidbody;
+            
+
+            if (platform != null &&
+                platform.isKinematic &&
+                hit.normal.y > 0.5f &&
+                _verticalVelocity <= 0f
+                )
+            {
+                if (currentPlatform != platform)
+                {
+                    currentPlatform = platform;
+                    previousPlatformPosition = platform.position;
+                }
+            }
         }
 
         // modif pour que le joueur ne puisse pas sauter en l'air, on va ajouter un booléen grounded qui sera mis à true lorsque le joueur touche le sol et à false lorsqu'il est en l'air
