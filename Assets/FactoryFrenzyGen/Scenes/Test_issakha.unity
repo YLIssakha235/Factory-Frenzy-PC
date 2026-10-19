@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -212,7 +212,7 @@ PrefabInstance:
     - target: {fileID: 2916913559372343353, guid: 85da40441c3eeba47b18b5df6d89085f,
         type: 3}
       propertyPath: bounceForce
-      value: 5
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 2923148964920014891, guid: 85da40441c3eeba47b18b5df6d89085f,
         type: 3}
@@ -686,7 +686,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e5d90070c033d44e81256e6da53901b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  player: {fileID: 953651854}
   countdownText: {fileID: 0}
   timerText: {fileID: 0}
   endPanel: {fileID: 0}
@@ -892,6 +892,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b7a1a25079f4f442b049aff5ae89932, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &953651854 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2078717243486908139, guid: 478bb5eddcbef644aa5ab77fa390fb6a,
+    type: 3}
+  m_PrefabInstance: {fileID: 8620359081906343036}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1088448312
 GameObject:
   m_ObjectHideFlags: 0
@@ -1026,7 +1032,7 @@ PrefabInstance:
     - target: {fileID: 2867797962337078453, guid: 9d6af474dec13d74d923c5afa80329b8,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6536724763109845123, guid: 9d6af474dec13d74d923c5afa80329b8,
         type: 3}
@@ -1427,8 +1433,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4743503454017796035, guid: 1bab7c3d02c56cd4aaf9b962872d3286,
         type: 3}
+      propertyPath: endOffset.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4743503454017796035, guid: 1bab7c3d02c56cd4aaf9b962872d3286,
+        type: 3}
+      propertyPath: endOffset.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4743503454017796035, guid: 1bab7c3d02c56cd4aaf9b962872d3286,
+        type: 3}
       propertyPath: endOffset.z
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4875483838385404362, guid: 1bab7c3d02c56cd4aaf9b962872d3286,
+        type: 3}
+      propertyPath: m_Interpolate
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7425747379251120788, guid: 1bab7c3d02c56cd4aaf9b962872d3286,
         type: 3}
@@ -1527,10 +1548,20 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1419352189}
     m_Modifications:
+    - target: {fileID: 1715868156483544029, guid: 478bb5eddcbef644aa5ab77fa390fb6a,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2078717243486908139, guid: 478bb5eddcbef644aa5ab77fa390fb6a,
         type: 3}
       propertyPath: m_Name
       value: Player3D
+      objectReference: {fileID: 0}
+    - target: {fileID: 2547515827343277006, guid: 478bb5eddcbef644aa5ab77fa390fb6a,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4584062231478813193, guid: 478bb5eddcbef644aa5ab77fa390fb6a,
         type: 3}
