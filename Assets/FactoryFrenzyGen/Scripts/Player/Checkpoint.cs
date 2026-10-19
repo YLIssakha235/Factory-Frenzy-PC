@@ -1,4 +1,5 @@
 using UnityEngine;
+using StarterAssets;
 
 // PC-PLA-P7 – when the player touches it, this becomes his new respawn point.
 // Put it on the Checkpoint object (or its CheckpointTrigger child).
@@ -29,12 +30,14 @@ public class Checkpoint : MonoBehaviour
         if (activated) return; // only once
 
         // is it the player? (the player is the object that has PlayerPhysics)
-        PlayerPhysics player = other.GetComponentInParent<PlayerPhysics>();
+        //PlayerPhysics player = other.GetComponentInParent<PlayerPhysics>();
+        ThirdPersonController player = other.GetComponentInParent<ThirdPersonController>();
         if (player == null) return;
 
         activated = true;
         // a little above the floor so the player does not appear inside it
-        player.SetCheckpoint(respawnPoint.position + Vector3.up * 0.5f);
+        //player.SetCheckpoint(respawnPoint.position + Vector3.up * 0.5f);
+        player.SetRespawnPosition(respawnPoint.position + Vector3.up * 0.5f);
         Debug.Log("Checkpoint: activated, new respawn point = " + respawnPoint.position);
 
         // turn the arch green
