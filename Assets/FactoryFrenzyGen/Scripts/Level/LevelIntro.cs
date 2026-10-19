@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using Cinemachine;
 
 // Camera flight around the whole level before the countdown.
 // Put it on an empty GameObject called "LevelIntro". RaceManager plays it automatically.
@@ -15,7 +14,8 @@ public class LevelIntro : MonoBehaviour
         if (cam == null) yield break;
 
         // Cinemachine normally moves the camera: we turn it off during the intro
-        CinemachineBrain brain = cam.GetComponent<CinemachineBrain>();
+        // (found by its name, so it works with every Cinemachine version)
+        Behaviour brain = cam.GetComponent("CinemachineBrain") as Behaviour;
         if (brain != null) brain.enabled = false;
 
         // the level goes from the Start platform to the Finish platform
@@ -32,7 +32,8 @@ public class LevelIntro : MonoBehaviour
         float height = levelSize * 0.35f + 8;
 
         // where the camera must end: behind the player
-        PlayerPhysics player = FindObjectOfType<PlayerPhysics>();
+        // (we look for the CharacterController: the ThirdPersonController is turned off during the intro)
+        CharacterController player = FindObjectOfType<CharacterController>();
         Vector3 endPosition = center;
         Vector3 endLookAt = center;
         if (player != null)

@@ -1,5 +1,6 @@
 using System.IO;
 using UnityEngine;
+using StarterAssets;
 
 // PC-LOB-L2 – loads a level from a JSON file and places the prefabs.
 // Put it on an empty GameObject called "LevelLoader" and drag all the prefabs into "Prefabs"
@@ -113,7 +114,7 @@ public class LevelLoader : MonoBehaviour
 
     static void PlacePlayer(Transform startPlatform)
     {
-        PlayerPhysics player = FindObjectOfType<PlayerPhysics>();
+        ThirdPersonController player = FindObjectOfType<ThirdPersonController>();
         if (player == null) return;
 
         Transform spawn = startPlatform.Find("SpawnPoint");
@@ -127,6 +128,6 @@ public class LevelLoader : MonoBehaviour
         player.transform.rotation = startPlatform.rotation;
         if (controller != null) controller.enabled = true;
 
-        player.SetCheckpoint(position);
+        player.SetRespawnPosition(position); // the start is the first checkpoint
     }
 }
