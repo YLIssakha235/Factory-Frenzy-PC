@@ -163,6 +163,8 @@ namespace StarterAssets
 
             // set respawn position to the initial position of the player
             _respawnPosition = transform.position;
+
+     
         }
 
         private void Update()
@@ -324,7 +326,8 @@ namespace StarterAssets
 
             // deplacement total 
             _controller.Move(playerMovement + platformMovement + windMovement + bumperMovement);
-            
+            //_controller.Move(playerMovement + windMovement + bumperMovement);
+
 
             // ralentissent bumper
             bumperVelocity = Vector3.MoveTowards(

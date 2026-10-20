@@ -42,7 +42,7 @@ public class MovingPlatform : MonoBehaviour
             t
         );
 
-        // Déplacer le Rigidbody cinématique
-        rb.MovePosition(newPosition);
+        // Mettre à jour la position de la plateforme
+        rb.MovePosition(newPosition);   
     }
 }

@@ -612,6 +612,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8515706245461134732}
+  - component: {fileID: 401027942461539757}
   m_Layer: 0
   m_Name: Launcher
   m_TagString: Untagged
@@ -639,6 +640,29 @@ Transform:
   - {fileID: 3113891162342183299}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &401027942461539757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7363783201521863365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb2abd220d7ae6f469d227c18ff8b9ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  head: {fileID: 1020105052300813652}
+  player: {fileID: 7934956017352100830, guid: 478bb5eddcbef644aa5ab77fa390fb6a, type: 3}
+  muzzle: {fileID: 1998730784758108230}
+  projectilePrefab: {fileID: 7276338693413979176, guid: a33369000dfa162418e008d918220b59,
+    type: 3}
+  detectionRadius: 10
+  maxAimAngle: 30
+  aimSpeed: 90
+  searchAngle: 45
+  searchSpeed: 30
+  fireInterval: 2
 --- !u!1 &7796640631979285005
 GameObject:
   m_ObjectHideFlags: 0

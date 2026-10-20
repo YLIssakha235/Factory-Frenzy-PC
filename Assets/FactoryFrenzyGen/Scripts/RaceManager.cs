@@ -20,6 +20,8 @@ public class RaceManager : MonoBehaviour
     public GameObject getReadyBanner;      // "GET READY!" shown during the countdown (optional)
 
     bool raceRunning = false;
+
+    public bool IsRaceRunning => raceRunning;
     float startTime;
 
     void Start()
