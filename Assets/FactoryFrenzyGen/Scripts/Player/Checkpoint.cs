@@ -31,11 +31,16 @@ public class Checkpoint : MonoBehaviour
 
         // is it the player? (the player is the object that has the ThirdPersonController)
         ThirdPersonController player = other.GetComponentInParent<ThirdPersonController>();
+        // is it the player? (the player is the object that has PlayerPhysics)
+        PlayerPhysics player = other.GetComponentInParent<PlayerPhysics>();
+        //ThirdPersonController player = other.GetComponentInParent<ThirdPersonController>();
         if (player == null) return;
 
         activated = true;
         // a little above the floor so the player does not appear inside it
         player.SetRespawnPosition(respawnPoint.position + Vector3.up * 0.5f);
+        player.SetCheckpoint(respawnPoint.position + Vector3.up * 0.5f);
+        //player.SetRespawnPosition(respawnPoint.position + Vector3.up * 0.5f);
         Debug.Log("Checkpoint: activated, new respawn point = " + respawnPoint.position);
 
         // turn the arch green

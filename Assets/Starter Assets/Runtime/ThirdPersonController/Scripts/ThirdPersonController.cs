@@ -169,8 +169,8 @@ namespace StarterAssets
         {
             _hasAnimator = TryGetComponent(out _animator);
 
-            JumpAndGravity();
             GroundedCheck();
+            JumpAndGravity();
             Move();
         }
 
@@ -231,14 +231,20 @@ namespace StarterAssets
 
             // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 
-            // note: Vector2's == operator uses approximation so is not floating point error prone, and is cheaper than magnitude
+            // note: Vector2's == operator uses approximation so is not floatin
+            // g point error prone, and is cheaper than magnitude
             // if there is no input, set the target speed to 0
             if (_input.move == Vector2.zero) targetSpeed = 0.0f;
 
+            if (_input.move == Vector2.zero)
+            {
+                _speed = 0f;
+            }
 
-            Debug.Log("Input: " + _input.move +
-                      " | Speed: " + _speed +
-                      " | Animation: " + _animationBlend);
+
+            //Debug.Log("Input: " + _input.move +
+            //          " | Speed: " + _speed +
+            //          " | Animation: " + _animationBlend);
 
             // a reference to the players current horizontal velocity
             //float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
@@ -264,8 +270,17 @@ namespace StarterAssets
                 _speed = targetSpeed;
             }
 
+
             _animationBlend = Mathf.Lerp(_animationBlend, targetSpeed, Time.deltaTime * SpeedChangeRate);
-            if (_animationBlend < 0.01f) _animationBlend = 0f;
+
+
+            if (_input.move == Vector2.zero)
+            {
+                _animationBlend = 0f;
+                _speed = 0f;
+            }
+
+
 
             // normalise input direction
             Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
@@ -298,16 +313,7 @@ namespace StarterAssets
 
             if (currentPlatform != null)
             {
-                if (Grounded && _verticalVelocity <= 0f)
-                {
-                    platformMovement = currentPlatform.position - previousPlatformPosition;
-                    
-                }
-
-                else
-                {
-                    currentPlatform = null;
-                }
+                platformMovement = currentPlatform.position - previousPlatformPosition;
             }
 
             // wind movement
@@ -318,6 +324,7 @@ namespace StarterAssets
 
             // deplacement total 
             _controller.Move(playerMovement + platformMovement + windMovement + bumperMovement);
+            
 
             // ralentissent bumper
             bumperVelocity = Vector3.MoveTowards(
@@ -335,9 +342,14 @@ namespace StarterAssets
             // update animator if using character
             if (_hasAnimator)
             {
-                _animator.SetFloat(_animIDSpeed, _animationBlend);
+                _animator.SetFloat(
+                    _animIDSpeed,
+                    _input.move == Vector2.zero ? 0f : _animationBlend
+                    );
+                
                 _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
             }
+
         }
 
         // WindMovement 
@@ -387,12 +399,12 @@ namespace StarterAssets
                 if (currentPlatform != platform)
                 {
                     currentPlatform = platform;
-                    previousPlatformPosition = platform.position;
+                    previousPlatformPosition = platform.transform.position;
                 }
             }
         }
 
-        // modif pour que le joueur ne puisse pas sauter en l'air, on va ajouter un booléen grounded qui sera mis à true lorsque le joueur touche le sol et à false lorsqu'il est en l'air
+        // modif pour que le joueur ne puisse pas sauter en l'air
         private void JumpAndGravity()
         {
             if (Grounded && _verticalVelocity <= 0f)
@@ -418,6 +430,9 @@ namespace StarterAssets
                 {
                     // the square root of H * -2 * G = how much velocity needed to reach desired height
                     _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+
+                    // player quit jumping after pressing jump once
+                    currentPlatform = null;
 
                     // update animator if using character
                     if (_hasAnimator)

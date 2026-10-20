@@ -1,4 +1,5 @@
 using UnityEngine;
+using StarterAssets;
 
 // Animates the bean character with code (no animation files).
 // Put it on the PlayerBean object (child of PlayerArmature).
@@ -80,7 +81,16 @@ public class BeanAnimator : MonoBehaviour
         {
             onGround = controller.isGrounded;
         }
+        //float speed = new Vector3(velocity.x, 0, velocity.z).magnitude;
+
         float speed = new Vector3(velocity.x, 0, velocity.z).magnitude;
+
+        StarterAssetsInputs input = GetComponentInParent<StarterAssetsInputs>();
+
+        if (input != null && input.move.sqrMagnitude < 0.01f)
+        {
+            speed = 0f;
+        }
 
         // 1. WALK / RUN: legs and arms swing, faster when we go faster
         walkTime += Time.deltaTime * speed * 2.5f;
