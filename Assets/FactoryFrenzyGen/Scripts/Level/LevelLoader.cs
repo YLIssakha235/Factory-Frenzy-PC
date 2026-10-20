@@ -44,7 +44,8 @@ public class LevelLoader : MonoBehaviour
         }
 
         string json = File.ReadAllText(path);
-        LevelData data = JsonUtility.FromJson<LevelData>(json);
+        LevelData data = LevelData.FromJson(json); // our format or the VR editor's
+
         Build(data, prefabs, transform);
         Debug.Log("LevelLoader: loaded " + data.levelName + " (" + data.elements.Count + " elements)");
     }

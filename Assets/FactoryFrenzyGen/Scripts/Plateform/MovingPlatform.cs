@@ -40,6 +40,8 @@ public class MovingPlatform : MonoBehaviour
             startPosition,
             endPosition,
             t
+
+
         );
 
         // Déplacer le Rigidbody cinématique

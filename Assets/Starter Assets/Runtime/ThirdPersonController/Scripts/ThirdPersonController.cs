@@ -372,11 +372,18 @@ namespace StarterAssets
         public void SetRespawnPosition(Vector3 position)
         {
             _respawnPosition = position;
+
         }
 
         public void Respawn()
         {
+            Debug.Log("Respawn called by: " + gameObject.name);   // [test]
             _verticalVelocity = 0f;
+
+            // [P1 fix] on arrête toutes les poussées, sinon le joueur continue de glisser après le respawn
+            bumperVelocity = Vector3.zero;
+            windVelocity = Vector3.zero;
+            currentPlatform = null;
 
             _controller.enabled = false;
             transform.position = _respawnPosition;

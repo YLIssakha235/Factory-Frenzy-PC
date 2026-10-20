@@ -3,9 +3,7 @@ using StarterAssets;
 
 public class Bumper : MonoBehaviour
 {
-   
     public float pushForce = 12f;
-
     public float upwardForce = 3f;
 
     private BumperFX bumperFX;
@@ -23,21 +21,19 @@ public class Bumper : MonoBehaviour
         if (player == null) return;
 
         // Direction opposée au bumper
-        Vector3 direction = player.transform.position -
-                            transform.position;
-
+        Vector3 direction = player.transform.position - transform.position;
         direction.y = 0f;
         direction = direction.normalized;
 
-        Vector3 impulse = direction * pushForce +
-                          Vector3.up * upwardForce;
+        Vector3 impulse = direction * pushForce + Vector3.up * upwardForce;
 
-       
         player.AddImpulse(impulse);
 
         if (bumperFX != null)
         {
             bumperFX.Pulse();
         }
+
+        SoundFX.Play("bumper", transform.position); // [ajout] le son du bumper
     }
 }

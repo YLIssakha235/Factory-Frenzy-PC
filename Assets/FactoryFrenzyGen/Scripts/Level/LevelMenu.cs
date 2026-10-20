@@ -70,7 +70,7 @@ public class LevelMenu : MonoBehaviour
     {
         try
         {
-            return JsonUtility.FromJson<LevelData>(File.ReadAllText(path));
+            return LevelData.FromJson(File.ReadAllText(path)); // our format or the VR editor's
         }
         catch
         {
