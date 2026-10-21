@@ -147,7 +147,7 @@ public class RaceManager : MonoBehaviour
         }
 
         controller.enabled = canMove;
-        Debug.Log("RaceManager: player can move = " + canMove);
+        //Debug.Log("RaceManager: player can move = " + canMove);
     }
 
     void SetText(TextMeshProUGUI text, string value)
@@ -157,7 +157,7 @@ public class RaceManager : MonoBehaviour
 
     public void GoToMenu()
     {
-        SceneManager.LoadScene("Menu");
+        SceneManager.LoadScene("MainMenu");
     }
 
     string FormatTime(float seconds)

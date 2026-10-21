@@ -31,7 +31,7 @@ public class LauncherProjectile : MonoBehaviour
     {
         if (other.gameObject.tag == "Shield")
         {
-            Debug.Log("Projectile absorbe par le mur !");
+            //Debug.Log("Projectile absorbe par le mur !");
             Destroy(gameObject);
             return;
         }
@@ -40,7 +40,7 @@ public class LauncherProjectile : MonoBehaviour
 
         if (player != null)
         {
-            Debug.Log("Projectile : joueur touche !");
+            //Debug.Log("Projectile : joueur touche !");
 
             Vector3 force = transform.forward * pushForce;
             force.y = upwardForce;

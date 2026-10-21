@@ -32,7 +32,7 @@ public class LevelLoader : MonoBehaviour
         string path = GetLevelPath(fileName);
         if (!File.Exists(path))
         {
-            Debug.LogWarning("LevelLoader: file not found " + path);
+            //Debug.LogWarning("LevelLoader: file not found " + path);
             return;
         }
 
@@ -40,7 +40,7 @@ public class LevelLoader : MonoBehaviour
         LevelData data = LevelData.FromJson(json);
 
         Build(data, prefabs, transform);
-        Debug.Log("LevelLoader: loaded " + data.levelName + " (" + data.elements.Count + " elements)");
+        //Debug.Log("LevelLoader: loaded " + data.levelName + " (" + data.elements.Count + " elements)");
     }
 
     public static void Build(LevelData data, GameObject[] prefabs, Transform parent)
@@ -53,7 +53,7 @@ public class LevelLoader : MonoBehaviour
             GameObject prefab = FindPrefab(prefabs, element.type);
             if (prefab == null)
             {
-                Debug.LogWarning("LevelLoader: no prefab called " + element.type);
+                //Debug.LogWarning("LevelLoader: no prefab called " + element.type);
                 continue;
             }
 

@@ -18,7 +18,7 @@ public class Checkpoint : MonoBehaviour
         respawnPoint = checkpointRoot.Find("RespawnPoint");
         if (respawnPoint == null) respawnPoint = transform;
 
-        Debug.Log("Checkpoint: ready on " + name);
+        //Debug.Log("Checkpoint: ready on " + name);
     }
 
     void OnTriggerEnter(Collider other)
@@ -30,7 +30,7 @@ public class Checkpoint : MonoBehaviour
 
         activated = true;
         player.SetRespawnPosition(respawnPoint.position + Vector3.up * 0.5f);   
-        Debug.Log("Checkpoint: activated, new respawn point = " + respawnPoint.position);
+        //Debug.Log("Checkpoint: activated, new respawn point = " + respawnPoint.position);
 
         SoundFX.Play("checkpoint", transform.position);                         
 

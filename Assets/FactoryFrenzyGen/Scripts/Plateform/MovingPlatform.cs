@@ -34,7 +34,7 @@ public class MovingPlatform : MonoBehaviour
         Rigidbody body = GetComponent<Rigidbody>();
         if (body != null)
         {
-            Debug.LogWarning("MovingPlatform: Rigidbody retiré de " + name + " (pas besoin, ce script transporte le joueur)");
+            //Debug.LogWarning("MovingPlatform: Rigidbody retiré de " + name + " (pas besoin, ce script transporte le joueur)");
             Destroy(body);
         }
     }

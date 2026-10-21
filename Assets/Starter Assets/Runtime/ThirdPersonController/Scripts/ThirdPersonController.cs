@@ -153,7 +153,7 @@ namespace StarterAssets
 #if ENABLE_INPUT_SYSTEM
             _playerInput = GetComponent<PlayerInput>();
 #else
-			Debug.LogError( "Starter Assets package is missing dependencies. Please use Tools/Starter Assets/Reinstall Dependencies to fix it");
+			//Debug.LogError( "Starter Assets package is missing dependencies. Please use Tools/Starter Assets/Reinstall Dependencies to fix it");
 #endif
 
             AssignAnimationIDs();
@@ -381,7 +381,7 @@ namespace StarterAssets
 
         public void Respawn()
         {
-            Debug.Log("Respawn called by: " + gameObject.name);   // [test]
+            //Debug.Log("Respawn called by: " + gameObject.name);   // [test]
             _verticalVelocity = 0f;
 
             // [P1 fix] on arrête toutes les poussées, sinon le joueur continue de glisser après le respawn

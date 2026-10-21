@@ -549,7 +549,7 @@ GameObject:
   - component: {fileID: 1423586064877791477}
   m_Layer: 0
   m_Name: Rim
-  m_TagString: Untagged
+  m_TagString: Shield
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

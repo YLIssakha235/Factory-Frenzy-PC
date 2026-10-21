@@ -16,7 +16,7 @@ public class KillZone : MonoBehaviour
         ThirdPersonController player = other.GetComponentInParent<ThirdPersonController>();
         if (player == null) return;
 
-        Debug.Log("KillZone: the player fell -> respawn");
+        //Debug.Log("KillZone: the player fell -> respawn");
         player.Respawn();
     }
 }

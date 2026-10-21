@@ -49,7 +49,7 @@ public class LevelMenu : MonoBehaviour
         }
 
         if (emptyText != null) emptyText.SetActive(number == 1);
-        Debug.Log("LevelMenu: " + (number - 1) + " levels found in " + folder);
+        //Debug.Log("LevelMenu: " + (number - 1) + " levels found in " + folder);
     }
 
     
@@ -70,7 +70,7 @@ public class LevelMenu : MonoBehaviour
         }
         catch
         {
-            Debug.LogWarning("LevelMenu: cannot read " + path + " (not a valid level JSON)");
+            //Debug.LogWarning("LevelMenu: cannot read " + path + " (not a valid level JSON)");
             return null;
         }
     }
@@ -102,7 +102,7 @@ public class LevelMenu : MonoBehaviour
     
     public void PlayLevel(string fileName)
     {
-        Debug.Log("LevelMenu: play " + fileName);
+        //Debug.Log("LevelMenu: play " + fileName);
         PlayerPrefs.SetString("SelectedLevel", fileName); 
         SceneManager.LoadScene(raceScene);
     }

@@ -42,12 +42,12 @@ public class LauncherController : MonoBehaviour
             GameObject target = GameObject.Find(playerObjectName);
             if (target != null) player = target.transform;
         }
-        Debug.Log("Launcher : cible = " + (player != null ? player.name : "aucune"));
+        //Debug.Log("Launcher : cible = " + (player != null ? player.name : "aucune"));
         if (head == null) head = transform.Find("Head");
         if (muzzle == null && head != null) muzzle = head.Find("Muzzle");
 
-        if (player == null) Debug.LogWarning("Launcher : joueur introuvable");
-        if (head == null || muzzle == null) Debug.LogWarning("Launcher : Head ou Muzzle introuvable dans " + name);
+        if (player == null) //Debug.LogWarning("Launcher : joueur introuvable");
+        if (head == null || muzzle == null) //Debug.LogWarning("Launcher : Head ou Muzzle introuvable dans " + name);
 
         if (head != null)
             initialRotation = head.localRotation;
