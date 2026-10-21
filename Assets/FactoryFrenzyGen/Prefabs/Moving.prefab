@@ -1041,7 +1041,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 284d30a6ae23d514b8f6aa830e39a5a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  endOffset: {x: 0, y: 0, z: 5}
+  endOffset: {x: 5, y: 0, z: 0}
   travelTime: 3
 --- !u!1 &7480967512321919161
 GameObject:

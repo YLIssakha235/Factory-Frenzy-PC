@@ -72,11 +72,13 @@ public class RaceManager : MonoBehaviour
         {
             SetText(countdownText, number.ToString());
             if (lights != null) lights.SetCountdown(number);
+            SoundFX.Play("countdown_beep");
             yield return new WaitForSeconds(1);
         }
 
         // GO!
         SetText(countdownText, "GO!");
+        SoundFX.Play("countdown_go");
         if (getReadyBanner != null) getReadyBanner.SetActive(false);
         if (lights != null) lights.SetCountdown(0);
         SetPlayerCanMove(true);
@@ -121,6 +123,8 @@ public class RaceManager : MonoBehaviour
         }
         FinishFX finish = FindObjectOfType<FinishFX>();
         if (finish != null) finish.Celebrate();
+        SoundFX.Play("finish");
+        if (newRecord) SoundFX.Play("new_record");
 
         // end screen
         // big time, then the best time smaller (<size> and <color> are TextMeshPro tags)

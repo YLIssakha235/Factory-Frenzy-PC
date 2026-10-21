@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using Cinemachine;
 
 // Camera flight around the whole level before the countdown.
 // Put it on an empty GameObject called "LevelIntro". RaceManager plays it automatically.
@@ -15,24 +14,20 @@ public class LevelIntro : MonoBehaviour
         if (cam == null) yield break;
 
         // Cinemachine normally moves the camera: we turn it off during the intro
-        CinemachineBrain brain = cam.GetComponent<CinemachineBrain>();
+        // (found by its name, so it works with every Cinemachine version)
+        Behaviour brain = cam.GetComponent("CinemachineBrain") as Behaviour;
         if (brain != null) brain.enabled = false;
 
-        // the level goes from the Start platform to the Finish platform
-        Vector3 start = Vector3.zero;
-        Vector3 finish = Vector3.zero;
-        StartLightsFX startPlatform = FindObjectOfType<StartLightsFX>();
-        FinishFX finishPlatform = FindObjectOfType<FinishFX>();
-        if (startPlatform != null) start = startPlatform.transform.position;
-        if (finishPlatform != null) finish = finishPlatform.transform.position;
-
-        Vector3 center = (start + finish) / 2;
-        float levelSize = Vector3.Distance(start, finish);
+        // the box that contains ALL the objects of the level (works for any level, even one made in VR)
+        Bounds level = GetLevelBounds();
+        Vector3 center = level.center;
+        float levelSize = Mathf.Max(level.size.x, level.size.z);
         float radius = levelSize * 0.6f + 10;
         float height = levelSize * 0.35f + 8;
 
         // where the camera must end: behind the player
-        PlayerPhysics player = FindObjectOfType<PlayerPhysics>();
+        // (we look for the CharacterController: the ThirdPersonController is turned off during the intro)
+        CharacterController player = FindObjectOfType<CharacterController>();
         Vector3 endPosition = center;
         Vector3 endLookAt = center;
         if (player != null)
@@ -64,5 +59,36 @@ public class LevelIntro : MonoBehaviour
 
         // give the camera back to Cinemachine (it follows the player again)
         if (brain != null) brain.enabled = true;
+    }
+    // Finds the level objects (made by the LevelLoader, or the "Level" object placed by hand)
+    // and returns the box around all their visible parts.
+    Bounds GetLevelBounds()
+    {
+        GameObject levelRoot = null;
+        LevelLoader loader = FindObjectOfType<LevelLoader>();
+        if (loader != null) levelRoot = loader.gameObject;
+        if (levelRoot == null) levelRoot = GameObject.Find("Level");
+
+        Bounds box = new Bounds(Vector3.zero, Vector3.zero);
+        bool first = true;
+        if (levelRoot != null)
+        {
+            foreach (Renderer part in levelRoot.GetComponentsInChildren<Renderer>())
+            {
+                if (!part.enabled) continue;                         // e.g. the invisible kill zone
+                if (part.GetComponentInParent<KillZone>() != null) continue;
+                if (first) { box = part.bounds; first = false; }
+                else box.Encapsulate(part.bounds);                  // grow the box to contain this part
+            }
+        }
+
+        if (first) // nothing found: use the Start and Finish like before
+        {
+            StartLightsFX start = FindObjectOfType<StartLightsFX>();
+            FinishFX finish = FindObjectOfType<FinishFX>();
+            if (start != null) box = new Bounds(start.transform.position, Vector3.one);
+            if (finish != null) box.Encapsulate(finish.transform.position);
+        }
+        return box;
     }
 }

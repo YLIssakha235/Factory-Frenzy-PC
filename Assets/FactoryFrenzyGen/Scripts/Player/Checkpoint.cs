@@ -27,24 +27,18 @@ public class Checkpoint : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (activated) return; // only once
+        if (activated) return;
 
-        // is it the player? (the player is the object that has PlayerPhysics)
-        PlayerPhysics player = other.GetComponentInParent<PlayerPhysics>();
-        //ThirdPersonController player = other.GetComponentInParent<ThirdPersonController>();
+        ThirdPersonController player = other.GetComponentInParent<ThirdPersonController>();
         if (player == null) return;
 
         activated = true;
-        // a little above the floor so the player does not appear inside it
-        player.SetCheckpoint(respawnPoint.position + Vector3.up * 0.5f);
-        //player.SetRespawnPosition(respawnPoint.position + Vector3.up * 0.5f);
+        player.SetRespawnPosition(respawnPoint.position + Vector3.up * 0.5f);   // TEST A: put // here
         Debug.Log("Checkpoint: activated, new respawn point = " + respawnPoint.position);
 
-        // turn the arch green
+        SoundFX.Play("checkpoint", transform.position);                           // TEST B: put // here
+
         CheckpointFX fx = GetComponentInParent<CheckpointFX>();
-        if (fx != null)
-        {
-            fx.Activate();
-        }
+        if (fx != null) fx.Activate();                                            // TEST C: put // here
     }
 }

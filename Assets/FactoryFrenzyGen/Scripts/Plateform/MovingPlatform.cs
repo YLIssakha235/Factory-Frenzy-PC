@@ -34,9 +34,13 @@ public class MovingPlatform : MonoBehaviour
         // Calcul du mouvement aller-retour
         elapsedTime += Time.deltaTime;
 
-        float t = Mathf.PingPong(
-            elapsedTime / travelTime,
-            1f
+        // Calculer la nouvelle position
+        Vector3 newPosition = Vector3.Lerp(
+            startPosition,
+            endPosition,
+            t
+
+
         );
 
         // Deplacement progressif
