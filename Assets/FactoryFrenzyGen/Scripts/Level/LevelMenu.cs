@@ -110,6 +110,10 @@ public class LevelMenu : MonoBehaviour
    
     public void Quit()
     {
-        Application.Quit();
+
+
+        UnityEditor.EditorApplication.isPlaying = false;   // in Unity: stops Play mode
+
+    //  Application.Quit(); // in application : stops play mode
     }
 }
