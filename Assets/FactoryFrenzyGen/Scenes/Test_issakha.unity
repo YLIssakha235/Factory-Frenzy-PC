@@ -1501,36 +1501,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3737806778309316889, guid: 1bab7c3d02c56cd4aaf9b962872d3286,
-        type: 3}
-      propertyPath: m_IsTrigger
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4743503454017796035, guid: 1bab7c3d02c56cd4aaf9b962872d3286,
-        type: 3}
-      propertyPath: endOffset.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4743503454017796035, guid: 1bab7c3d02c56cd4aaf9b962872d3286,
-        type: 3}
-      propertyPath: endOffset.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4743503454017796035, guid: 1bab7c3d02c56cd4aaf9b962872d3286,
-        type: 3}
-      propertyPath: endOffset.z
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4875483838385404362, guid: 1bab7c3d02c56cd4aaf9b962872d3286,
-        type: 3}
-      propertyPath: m_Interpolate
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6329778279354085614, guid: 1bab7c3d02c56cd4aaf9b962872d3286,
-        type: 3}
-      propertyPath: m_IsTrigger
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7425747379251120788, guid: 1bab7c3d02c56cd4aaf9b962872d3286,
         type: 3}
       propertyPath: m_Name
