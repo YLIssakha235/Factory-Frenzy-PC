@@ -1,7 +1,6 @@
 using UnityEngine;
 
-// PC-TRA-T2 – the launcher's eye shows its state, and the barrel recoils when it shoots.
-// The launcher state machine calls ShowSearch(), ShowOrient(), ShowFire() and Recoil().
+
 public class LauncherFX : MonoBehaviour
 {
     Renderer eye;

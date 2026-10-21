@@ -657,6 +657,7 @@ MonoBehaviour:
   muzzle: {fileID: 1998730784758108230}
   projectilePrefab: {fileID: 7276338693413979176, guid: a33369000dfa162418e008d918220b59,
     type: 3}
+  playerObjectName: PlayerArmature
   detectionRadius: 10
   maxAimAngle: 30
   aimSpeed: 90

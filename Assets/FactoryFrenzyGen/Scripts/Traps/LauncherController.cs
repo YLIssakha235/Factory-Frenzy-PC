@@ -1,5 +1,5 @@
-
 using UnityEngine;
+using StarterAssets; 
 
 public class LauncherController : MonoBehaviour
 {
@@ -8,6 +8,7 @@ public class LauncherController : MonoBehaviour
     public Transform player;
     public Transform muzzle;
     public GameObject projectilePrefab;
+    public string playerObjectName = "PlayerArmature"; 
 
     [Header("Detection et rotation")]
     public float detectionRadius = 30f;
@@ -24,9 +25,30 @@ public class LauncherController : MonoBehaviour
     private Quaternion initialRotation;
     private float fireTimer;
     private RaceManager raceManager;
+    private bool playerInRange = false; 
 
     void Start()
     {
+        
+        player = null;
+        ThirdPersonController controller = FindObjectOfType<ThirdPersonController>();
+        if (controller != null)
+        {
+            player = controller.transform;
+        }
+        else
+        {
+     
+            GameObject target = GameObject.Find(playerObjectName);
+            if (target != null) player = target.transform;
+        }
+        Debug.Log("Launcher : cible = " + (player != null ? player.name : "aucune"));
+        if (head == null) head = transform.Find("Head");
+        if (muzzle == null && head != null) muzzle = head.Find("Muzzle");
+
+        if (player == null) Debug.LogWarning("Launcher : joueur introuvable");
+        if (head == null || muzzle == null) Debug.LogWarning("Launcher : Head ou Muzzle introuvable dans " + name);
+
         if (head != null)
             initialRotation = head.localRotation;
 
@@ -35,7 +57,6 @@ public class LauncherController : MonoBehaviour
 
     void Update()
     {
-        // Le canon attend le GO! du RaceManager
         if (raceManager != null && !raceManager.IsRaceRunning)
             return;
 
@@ -45,13 +66,11 @@ public class LauncherController : MonoBehaviour
         Vector3 direction = player.position - head.position;
         direction.y = 0f;
 
-        // Joueur hors de portee : recherche
         if (direction.magnitude > detectionRadius)
         {
-            float angle = Mathf.PingPong(
-                Time.time * searchSpeed,
-                searchAngle * 2f
-            ) - searchAngle;
+            playerInRange = false;
+
+            float angle = Mathf.PingPong(Time.time * searchSpeed, searchAngle * 2f) - searchAngle;
 
             head.localRotation = Quaternion.RotateTowards(
                 head.localRotation,
@@ -63,31 +82,24 @@ public class LauncherController : MonoBehaviour
             return;
         }
 
-        // Direction actuelle du canon
+        if (!playerInRange)
+        {
+            playerInRange = true;
+            SoundFX.Play("launcher_alert", transform.position);
+        }
+
         Vector3 cannonForward = muzzle.forward;
         cannonForward.y = 0f;
 
-        if (direction.sqrMagnitude < 0.001f ||
-            cannonForward.sqrMagnitude < 0.001f)
+        if (direction.sqrMagnitude < 0.001f || cannonForward.sqrMagnitude < 0.001f)
             return;
 
-        // Calcul de l'angle vers le joueur
-        float angleToPlayer = Vector3.SignedAngle(
-            cannonForward,
-            direction,
-            Vector3.up
-        );
+        float angleToPlayer = Vector3.SignedAngle(cannonForward, direction, Vector3.up);
 
-        // Rotation progressive
-        float rotationStep = Mathf.Clamp(
-            angleToPlayer,
-            -aimSpeed * Time.deltaTime,
-            aimSpeed * Time.deltaTime
-        );
+        float rotationStep = Mathf.Clamp(angleToPlayer, -aimSpeed * Time.deltaTime, aimSpeed * Time.deltaTime);
 
         head.Rotate(Vector3.up, rotationStep, Space.World);
 
-        // Tir automatique
         fireTimer += Time.deltaTime;
 
         if (fireTimer >= fireInterval)
@@ -102,15 +114,10 @@ public class LauncherController : MonoBehaviour
         if (muzzle == null || projectilePrefab == null)
             return;
 
-        Vector3 shootDirection =
-            (player.position + Vector3.up - muzzle.position).normalized;
+        Vector3 shootDirection = (player.position + Vector3.up - muzzle.position).normalized;
 
-        Instantiate(
-            projectilePrefab,
-            muzzle.position,
-            Quaternion.LookRotation(shootDirection)
-        );
+        Instantiate(projectilePrefab, muzzle.position, Quaternion.LookRotation(shootDirection));
 
-        Debug.Log("Launcher : projectile tire !");
+        SoundFX.Play("launcher_fire", transform.position); 
     }
 }

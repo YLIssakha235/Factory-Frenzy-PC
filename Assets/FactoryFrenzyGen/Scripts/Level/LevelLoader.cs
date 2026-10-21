@@ -2,26 +2,19 @@ using System.IO;
 using UnityEngine;
 using StarterAssets;
 
-// PC-LOB-L2 – loads a level from a JSON file and places the prefabs.
-// Put it on an empty GameObject called "LevelLoader" and drag all the prefabs into "Prefabs"
-// (or use the menu Factory Frenzy > Setup Race Scene).
-// The JSON files are in the Levels folder (see GetLevelsFolder below).
-// The main menu saves the chosen file name in PlayerPrefs "SelectedLevel".
+
 public class LevelLoader : MonoBehaviour
 {
-    public string levelFile = "Level1.json"; // used if the menu did not choose a level
-    public GameObject[] prefabs;             // one prefab per type (Start, Classic, Bumper...)
+    public string levelFile = "Level1.json"; 
+    public GameObject[] prefabs;            
 
     void Awake()
     {
-        // the main menu saves the chosen level here
         string fileName = PlayerPrefs.GetString("SelectedLevel", levelFile);
         Load(fileName);
     }
 
-    // The folder with all the level files (used by the menu and by the loader).
-    // 1) the normal Unity folder Assets/StreamingAssets/Levels/
-    // 2) otherwise our folder Assets/FactoryFrenzyGen/StreamingAssets/Levels/
+    
     public static string GetLevelsFolder()
     {
         string normalFolder = Path.Combine(Application.streamingAssetsPath, "Levels");
@@ -44,13 +37,12 @@ public class LevelLoader : MonoBehaviour
         }
 
         string json = File.ReadAllText(path);
-        LevelData data = LevelData.FromJson(json); // our format or the VR editor's
+        LevelData data = LevelData.FromJson(json);
 
         Build(data, prefabs, transform);
         Debug.Log("LevelLoader: loaded " + data.levelName + " (" + data.elements.Count + " elements)");
     }
 
-    // Creates every element of the level. Also used by the editor menu.
     public static void Build(LevelData data, GameObject[] prefabs, Transform parent)
     {
         float lowestY = 0;
@@ -69,10 +61,8 @@ public class LevelLoader : MonoBehaviour
             go.name = element.type;
             go.transform.localScale = element.scale;
 
-            // the moving platform script (Person 2) can receive its path with a SetPath(LevelElement) function
             go.SendMessage("SetPath", element, SendMessageOptions.DontRequireReceiver);
 
-            // bigger checkpoint trigger, so the player always touches it
             if (element.type == "Checkpoint")
             {
                 Transform trigger = go.transform.Find("CheckpointTrigger");
@@ -87,7 +77,6 @@ public class LevelLoader : MonoBehaviour
             if (element.position.y < lowestY) lowestY = element.position.y;
         }
 
-        // kill zone 8 m under the lowest element (10 m thick so a fast fall is always caught)
         GameObject killZonePrefab = FindPrefab(prefabs, "KillZone");
         if (killZonePrefab != null)
         {
@@ -96,7 +85,6 @@ public class LevelLoader : MonoBehaviour
             killZone.transform.localScale = new Vector3(1, 10, 1);
         }
 
-        // put the player on the start platform
         if (startPlatform != null)
         {
             PlacePlayer(startPlatform);
@@ -122,13 +110,12 @@ public class LevelLoader : MonoBehaviour
         Vector3 position = startPlatform.position + Vector3.up;
         if (spawn != null) position = spawn.position + Vector3.up * 0.1f;
 
-        // the CharacterController must be off to teleport the player
         CharacterController controller = player.GetComponent<CharacterController>();
         if (controller != null) controller.enabled = false;
         player.transform.position = position;
         player.transform.rotation = startPlatform.rotation;
         if (controller != null) controller.enabled = true;
 
-        player.SetRespawnPosition(position); // the start is the first checkpoint
+        player.SetRespawnPosition(position); 
     }
 }

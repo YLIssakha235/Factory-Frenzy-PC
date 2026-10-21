@@ -1,7 +1,6 @@
 using UnityEngine;
 
-// PC-PLA-P6 – the pink pad squashes when the player bounces.
-// The trampoline script calls Bounce().
+
 public class TrampolineFX : MonoBehaviour
 {
     Transform pad;

@@ -1,7 +1,6 @@
 using UnityEngine;
 
-// PC-TRA-T1 – the bumper swells when the player touches it.
-// The bumper script calls Pulse().
+
 public class BumperFX : MonoBehaviour
 {
     Transform body;

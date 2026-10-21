@@ -8,12 +8,9 @@ namespace StarterAssets
 {
     public partial class StarterAssetsDeployMenu : ScriptableObject
     {
-        // prefab paths
         private const string PlayerArmaturePrefabName = "PlayerArmature";
 
-        /// <summary>
-        /// Check the Armature, main camera, cinemachine virtual camera, camera target and references
-        /// </summary>
+  
         [MenuItem(MenuRoot + "/Reset Third Person Controller Armature", false)]
         static void ResetThirdPersonControllerArmature()
         {
@@ -23,7 +20,6 @@ namespace StarterAssets
 
             GameObject playerGameObject = null;
 
-            // player
             if (player == null)
             {
                 if (TryLocatePrefab(PlayerArmaturePrefabName, null, new[] { typeof(ThirdPersonController), typeof(StarterAssetsInputs) }, out GameObject prefab, out string _))
@@ -42,7 +38,6 @@ namespace StarterAssets
 
             if (playerGameObject != null)
             {
-                // cameras
                 CheckCameras(playerGameObject.transform, GetThirdPersonPrefabPath());
             }
         }
@@ -56,7 +51,6 @@ namespace StarterAssets
 
             GameObject playerGameObject = null;
 
-            // player
             if (player == null)
             {
                 if (TryLocatePrefab(PlayerCapsulePrefabName, null, new[] { typeof(ThirdPersonController), typeof(StarterAssetsInputs) }, out GameObject prefab, out string _))
@@ -75,7 +69,6 @@ namespace StarterAssets
 
             if (playerGameObject != null)
             {
-                // cameras
                 CheckCameras(playerGameObject.transform, GetThirdPersonPrefabPath());
             }
         }

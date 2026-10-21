@@ -4,20 +4,17 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using StarterAssets;
 
-// PC-PLA-P2 + PC-PLA-P3 – countdown, timer and end screen.
-// Put it on an empty GameObject called "RaceManager" in the scene.
 public class RaceManager : MonoBehaviour
 {
     [Header("Player")]
-    public GameObject player;              // drag PlayerArmature here
-
+    public GameObject player;              
     [Header("UI")]
-    public TextMeshProUGUI countdownText;  // big text in the middle: 3, 2, 1, GO!
-    public TextMeshProUGUI timerText;      // small text in a corner: 00:12.3
-    public GameObject endPanel;            // panel shown at the end
-    public TextMeshProUGUI resultText;     // text inside the end panel
-    public TextMeshProUGUI bestTimeText;   // "BEST 00:18.2" in a corner (optional)
-    public GameObject getReadyBanner;      // "GET READY!" shown during the countdown (optional)
+    public TextMeshProUGUI countdownText; 
+    public TextMeshProUGUI timerText;      
+    public GameObject endPanel;           
+    public TextMeshProUGUI resultText;  
+    public TextMeshProUGUI bestTimeText;   
+    public GameObject getReadyBanner;     
 
     bool raceRunning = false;
 
@@ -30,17 +27,14 @@ public class RaceManager : MonoBehaviour
         if (endPanel != null) endPanel.SetActive(false);
         SetText(timerText, "00:00.0");
 
-        // show the best time saved on this computer
         float savedBest = PlayerPrefs.GetFloat("BestTime", 0);
         if (savedBest > 0) SetText(bestTimeText, "BEST " + FormatTime(savedBest));
         else SetText(bestTimeText, "BEST --:--");
 
-        // the finish line gets its script by code (no need to change the prefab)
         GameObject finishLine = GameObject.Find("FinishLine");
         if (finishLine != null) finishLine.AddComponent<FinishLine>();
         else Debug.LogWarning("RaceManager: no FinishLine in the scene (add a Finish platform).");
 
-        // nothing on screen before the countdown
         SetText(countdownText, "");
         if (getReadyBanner != null) getReadyBanner.SetActive(false);
 
@@ -49,17 +43,14 @@ public class RaceManager : MonoBehaviour
 
     IEnumerator StartRace()
     {
-        // the player cannot move during the intro and the countdown
         SetPlayerCanMove(false);
 
-        // 1. camera flight around the level (if there is a LevelIntro in the scene)
         LevelIntro intro = FindObjectOfType<LevelIntro>();
         if (intro != null)
         {
             yield return StartCoroutine(intro.Play());
         }
 
-        // 2. then the countdown
         yield return StartCoroutine(Countdown());
     }
 
@@ -97,15 +88,13 @@ public class RaceManager : MonoBehaviour
         }
     }
 
-    // Called by FinishLine when the player crosses the line
     public void PlayerFinished()
     {
-        if (!raceRunning) return; // only once
+        if (!raceRunning) return; 
         raceRunning = false;
 
         float time = Time.time - startTime;
 
-        // best time is saved on the computer
         float bestTime = PlayerPrefs.GetFloat("BestTime", 9999);
         bool newRecord = time < bestTime;
         if (newRecord)
@@ -114,7 +103,6 @@ public class RaceManager : MonoBehaviour
             PlayerPrefs.SetFloat("BestTime", bestTime);
         }
 
-        // stop the player and celebrate
         SetPlayerCanMove(false);
         if (player != null)
         {
@@ -126,8 +114,6 @@ public class RaceManager : MonoBehaviour
         SoundFX.Play("finish");
         if (newRecord) SoundFX.Play("new_record");
 
-        // end screen
-        // big time, then the best time smaller (<size> and <color> are TextMeshPro tags)
         string result = FormatTime(time);
         result += "\n<size=40%>Best " + FormatTime(bestTime) + "</size>";
         if (newRecord) result += "\n<size=40%><color=#FFC93C>NEW RECORD!</color></size>";
@@ -138,24 +124,21 @@ public class RaceManager : MonoBehaviour
 
     IEnumerator ShowEndPanel()
     {
-        yield return new WaitForSeconds(2); // let the confetti play first
+        yield return new WaitForSeconds(2); 
         if (endPanel != null) endPanel.SetActive(true);
-        Cursor.lockState = CursorLockMode.None; // so we can click the buttons
+        Cursor.lockState = CursorLockMode.None; 
         Cursor.visible = true;
     }
 
-    // Button "Restart" on the end panel
     public void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    // freezes or unfreezes the player (turns the Starter Assets controller off / on)
     void SetPlayerCanMove(bool canMove)
     {
         if (player == null) return;
 
-        // works if "player" is PlayerArmature or its parent
         ThirdPersonController controller = player.GetComponentInChildren<ThirdPersonController>();
         if (controller == null)
         {
@@ -167,19 +150,16 @@ public class RaceManager : MonoBehaviour
         Debug.Log("RaceManager: player can move = " + canMove);
     }
 
-    // writes in a text only if it exists
     void SetText(TextMeshProUGUI text, string value)
     {
         if (text != null) text.text = value;
     }
 
-    // Button "Menu" on the end panel (the "Menu" scene will be made later)
     public void GoToMenu()
     {
         SceneManager.LoadScene("Menu");
     }
 
-    // 12.345 seconds -> "00:12.3"
     string FormatTime(float seconds)
     {
         int minutes = (int)(seconds / 60);

@@ -1,7 +1,6 @@
 using UnityEngine;
 
-// PC-PLA-P7 – the flag waves, and Activate() turns the arch green.
-// Checkpoint.cs calls Activate() when the player passes.
+
 public class CheckpointFX : MonoBehaviour
 {
     Transform arch;
@@ -29,7 +28,6 @@ public class CheckpointFX : MonoBehaviour
         isOn = true;
         if (arch == null) return;
 
-        // every part of the arch becomes green and glows
         foreach (Renderer part in arch.GetComponentsInChildren<Renderer>())
         {
             part.material.color = Color.green;

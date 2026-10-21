@@ -1,11 +1,4 @@
-// Factory Frenzy – builds the race UI (HUD + end screen) from the UI kit sprites.
-// Put this file in Assets/Editor/. Then open your level scene and click:  Factory Frenzy > Build Race UI
-// It is an editor TOOL (like the prefab builder): it does not run in the game.
-//
-// What it does:
-//  1. sets the sprites in Assets/UI/Sprites to "Sprite" mode with the 9-slice borders
-//  2. creates a Canvas "RaceUI" laid out like the mockups
-//  3. links everything to the RaceManager (creates it if needed) and the Restart / Menu buttons
+
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -21,8 +14,8 @@ public static class RaceUIBuilder
 {
     const string SpriteFolder = "Assets/UI/Sprites/";
 
-    static readonly Color Yellow = new Color(1f, 0.79f, 0.24f);    // #FFC93C
-    static readonly Color Grey = new Color(0.56f, 0.6f, 0.69f);    // #8F9AB0
+    static readonly Color Yellow = new Color(1f, 0.79f, 0.24f);    
+    static readonly Color Grey = new Color(0.56f, 0.6f, 0.69f);   
 
     static TMP_FontAsset font;
 
@@ -32,7 +25,6 @@ public static class RaceUIBuilder
         PrepareSprites();
         font = FindFont();
 
-        // remove an old version of the UI
         GameObject old = GameObject.Find("RaceUI");
         if (old != null) Object.DestroyImmediate(old);
 
@@ -113,7 +105,6 @@ public static class RaceUIBuilder
 
     // ---------------------------------------------------------------- helpers
 
-    // Sprite mode + 9-slice borders for all the UI sprites
     static void PrepareSprites()
     {
         string[] sliced = { "button_yellow", "button_blue", "button_pink", "button_green", "button_grey", "banner_pink", "pill", "panel" };
@@ -132,13 +123,12 @@ public static class RaceUIBuilder
             if (System.Array.IndexOf(sliced, fileName) >= 0)
             {
                 float b = fileName == "panel" ? 44 : 40;
-                importer.spriteBorder = new Vector4(b, b, b, b); // left, bottom, right, top
+                importer.spriteBorder = new Vector4(b, b, b, b); 
             }
             importer.SaveAndReimport();
         }
     }
 
-    // uses the Lilita One font if you made it, otherwise the TextMeshPro default font
     static TMP_FontAsset FindFont()
     {
         string[] guids = AssetDatabase.FindAssets("Lilita t:TMP_FontAsset");
@@ -151,7 +141,6 @@ public static class RaceUIBuilder
         if (Object.FindObjectOfType<EventSystem>() != null) return;
         GameObject es = new GameObject("EventSystem");
         es.AddComponent<EventSystem>();
-        // Starter Assets uses the new Input System: use its UI module if it exists
         System.Type inputModule = System.Type.GetType("UnityEngine.InputSystem.UI.InputSystemUIInputModule, Unity.InputSystem");
         if (inputModule != null) es.AddComponent(inputModule);
         else es.AddComponent<StandaloneInputModule>();

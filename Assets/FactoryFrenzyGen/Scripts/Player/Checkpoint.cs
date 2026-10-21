@@ -1,9 +1,7 @@
 using UnityEngine;
 using StarterAssets;
 
-// PC-PLA-P7 – when the player touches it, this becomes his new respawn point.
-// Put it on the Checkpoint object (or its CheckpointTrigger child).
-// It needs a Box Collider with "Is Trigger" checked.
+
 public class Checkpoint : MonoBehaviour
 {
     Transform respawnPoint;
@@ -11,12 +9,10 @@ public class Checkpoint : MonoBehaviour
 
     void Start()
     {
-        // make sure the collider is a trigger
         Collider zone = GetComponent<Collider>();
         if (zone == null) Debug.LogWarning("Checkpoint: add a Box Collider (Is Trigger) to " + name);
         else zone.isTrigger = true;
 
-        // find "RespawnPoint" in the Checkpoint prefab
         Transform checkpointRoot = transform;
         if (transform.parent != null) checkpointRoot = transform.parent;
         respawnPoint = checkpointRoot.Find("RespawnPoint");
@@ -33,12 +29,12 @@ public class Checkpoint : MonoBehaviour
         if (player == null) return;
 
         activated = true;
-        player.SetRespawnPosition(respawnPoint.position + Vector3.up * 0.5f);   // TEST A: put // here
+        player.SetRespawnPosition(respawnPoint.position + Vector3.up * 0.5f);   
         Debug.Log("Checkpoint: activated, new respawn point = " + respawnPoint.position);
 
-        SoundFX.Play("checkpoint", transform.position);                           // TEST B: put // here
+        SoundFX.Play("checkpoint", transform.position);                         
 
         CheckpointFX fx = GetComponentInParent<CheckpointFX>();
-        if (fx != null) fx.Activate();                                            // TEST C: put // here
+        if (fx != null) fx.Activate();                                          
     }
 }

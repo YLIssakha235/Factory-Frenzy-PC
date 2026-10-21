@@ -1,7 +1,6 @@
 using UnityEngine;
 
-// PC-PLA-P3 – confetti when the player finishes.
-// Call Celebrate() when the player crosses the finish line.
+
 public class FinishFX : MonoBehaviour
 {
     ParticleSystem confetti;

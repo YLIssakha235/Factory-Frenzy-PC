@@ -5,9 +5,6 @@ using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 #endif
 
-// Factory Frenzy – pause menu during the race: Escape (or the pause button) stops the game.
-// RESUME · SETTINGS · RESTART · MAIN MENU (leave the race early) · QUIT GAME
-// Made by Factory Frenzy > Build Pause + Settings.
 public class PauseMenu : MonoBehaviour
 {
     public GameObject pausePanel;
@@ -27,7 +24,7 @@ public class PauseMenu : MonoBehaviour
     {
         if (!EscapePressed()) return;
 
-        if (settings != null && settings.gameObject.activeSelf) settings.Close(); // Escape in Settings = back
+        if (settings != null && settings.gameObject.activeSelf) settings.Close(); 
         else if (paused) Resume();
         else Pause();
     }
@@ -43,25 +40,25 @@ public class PauseMenu : MonoBehaviour
 
     public void Pause()
     {
-        // no pause on the end screen (the race is over)
+
         RaceManager race = FindObjectOfType<RaceManager>();
         if (race != null && race.endPanel != null && race.endPanel.activeSelf) return;
 
         paused = true;
-        Time.timeScale = 0;              // everything that uses time stops: timer, countdown, traps, platforms
+        Time.timeScale = 0;             
         pausePanel.SetActive(true);
 
-        // stop the camera and the player (they read the mouse even when time is stopped)
+        
         CharacterController body = FindObjectOfType<CharacterController>();
         controller = body != null ? body.GetComponent<ThirdPersonController>() : null;
-        controllerWasOn = controller != null && controller.enabled; // it is off during the countdown: keep it off
+        controllerWasOn = controller != null && controller.enabled; 
         if (controller != null) controller.enabled = false;
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
 
-    // RESUME button
+   
     public void Resume()
     {
         paused = false;
@@ -74,7 +71,6 @@ public class PauseMenu : MonoBehaviour
         Cursor.visible = false;
     }
 
-    // SETTINGS button: hide the pause menu, show settings, come back here with BACK
     public void OpenSettings()
     {
         pausePanel.SetActive(false);
@@ -82,21 +78,18 @@ public class PauseMenu : MonoBehaviour
         settings.Open();
     }
 
-    // RESTART button
     public void Restart()
     {
-        Time.timeScale = 1;              // never load a scene with time stopped!
+        Time.timeScale = 1;              
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    // MAIN MENU button = leave the race early
     public void GoToMenu()
     {
         Time.timeScale = 1;
         SceneManager.LoadScene("Menu");
     }
 
-    // QUIT GAME button
     public void QuitGame()
     {
         Time.timeScale = 1;

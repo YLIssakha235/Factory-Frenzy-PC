@@ -1,8 +1,3 @@
-// Factory Frenzy - places Level 1, 2 or 3 directly in the open scene (no JSON).
-// Put this file in Assets/Editor/. Menu: Factory Frenzy > Place Level > Level 1 / 2 / 3
-// After that, the objects are normal objects in your scene: you can move them, delete them, save the scene.
-//
-// Each line is:  Place("PrefabName", x, y, z)   or   Place("PrefabName", x, y, z, scaleX, scaleZ, rotationY)
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -26,7 +21,7 @@ public static class LevelPlacer
         Place("Classic", 0, 0, 7);
         Place("Classic", 0, 0, 12.5f, 0.75f, 0.75f, 0);
         Place("Classic", 0, 0, 18, 0.75f, 0.75f, 0);
-        Place("Moving", -2.5f, 0, 24);   // moves to x=2.5 in 3 s
+        Place("Moving", -2.5f, 0, 24);   
         Place("Classic", 0, 0, 30.5f, 1, 1.25f, 0);
         Place("Checkpoint", 0, 0, 37.5f);
         Place("Trampoline", 0, 0, 43);
@@ -50,8 +45,8 @@ public static class LevelPlacer
         Place("Classic", 0, 0, 31, 0.5f, 3, 0);
         Place("Classic", -4.5f, 0, 31, 0.5f, 0.5f, 0);
         Place("Fan", -4.5f, 0.3f, 31, 1, 1, 90);
-        Place("Moving", -2, 0, 41.5f);   // moves to x=2 in 2.5 s
-        Place("Moving", 2, 0, 47);   // moves to x=-2 in 2.5 s
+        Place("Moving", -2, 0, 41.5f);   
+        Place("Moving", 2, 0, 47);   
         Place("Checkpoint", 0, 0, 53);
         Place("Finish", 0, 0, 60);
         End();
@@ -68,19 +63,17 @@ public static class LevelPlacer
         Place("Launcher", 0, -3, 25);
         Place("Classic", 3, 0, 18.5f, 0.75f, 0.75f, 0);
         Place("Classic", 6.5f, 0, 24, 0.75f, 0.75f, 0);
-        Place("Classic", 4.7f, 1.3f, 24, 0.1f, 0.65f, 0, 3.33f);   // cover wall (thin, tall Classic)
-        Place("Moving", 6.5f, 0, 30);   // moves to x=3.5 in 2.5 s
+        Place("Classic", 4.7f, 1.3f, 24, 0.1f, 0.65f, 0, 3.33f);   
+        Place("Moving", 6.5f, 0, 30);   
         Place("Classic", 1.5f, 0, 35, 0.75f, 0.75f, 0);
-        Place("Classic", 1.5f, 1.3f, 33.7f, 0.65f, 0.1f, 0, 3.33f);   // cover wall (thin, tall Classic)
+        Place("Classic", 1.5f, 1.3f, 33.7f, 0.65f, 0.1f, 0, 3.33f);   
         Place("Checkpoint", -2.5f, 0, 40.5f);
         Place("Trampoline", -2.5f, 0, 46);
         Place("Finish", -2.5f, 4, 51.5f);
         End();
     }
 
-    // ---------------------------------------------------------------- helpers
 
-    // removes the old level and creates an empty "Level" object
     static void Begin(string name)
     {
         GameObject old = GameObject.Find("Level");
@@ -92,7 +85,6 @@ public static class LevelPlacer
         startPlatform = null;
     }
 
-    // creates one prefab in the level
     static void Place(string prefabName, float x, float y, float z, float scaleX = 1, float scaleZ = 1, float rotationY = 0, float scaleY = 1)
     {
         GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(PrefabFolder + prefabName + ".prefab");
@@ -107,7 +99,6 @@ public static class LevelPlacer
         go.transform.rotation = Quaternion.Euler(0, rotationY, 0);
         go.transform.localScale = new Vector3(scaleX, scaleY, scaleZ);
 
-        // bigger checkpoint trigger, so the player always touches it
         if (prefabName == "Checkpoint")
         {
             Transform trigger = go.transform.Find("CheckpointTrigger");
@@ -122,13 +113,10 @@ public static class LevelPlacer
         if (y < lowestY) lowestY = y;
     }
 
-    // adds the kill zone, puts the player on the start, saves
     static void End()
     {
-        // kill zone 8 m under the lowest object
         Place("KillZone", 0, lowestY - 8, 30, 1, 1, 0, 10);
 
-        // put the player on the start platform
         GameObject player = GameObject.Find("PlayerArmature");
         if (player != null && startPlatform != null)
         {

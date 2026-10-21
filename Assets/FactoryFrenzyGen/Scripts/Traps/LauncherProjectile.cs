@@ -1,6 +1,6 @@
-
 using UnityEngine;
 using StarterAssets;
+
 
 public class LauncherProjectile : MonoBehaviour
 {
@@ -14,32 +14,29 @@ public class LauncherProjectile : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        if (rb == null) rb = gameObject.AddComponent<Rigidbody>();
+
+        rb.isKinematic = false;
+        rb.useGravity = false;   
     }
 
     void Start()
     {
         Destroy(gameObject, lifetime);
 
-        // Propulser le projectile une seule fois
-        rb.AddForce(
-            transform.forward * speed,
-            ForceMode.VelocityChange
-        );
+        rb.AddForce(transform.forward * speed, ForceMode.VelocityChange);
     }
 
     void OnTriggerEnter(Collider other)
     {
-        
-        if (other.CompareTag("Shield"))
+        if (other.gameObject.tag == "Shield")
         {
             Debug.Log("Projectile absorbe par le mur !");
             Destroy(gameObject);
             return;
         }
 
-        
-        ThirdPersonController player =
-            other.GetComponentInParent<ThirdPersonController>();
+        ThirdPersonController player = other.GetComponentInParent<ThirdPersonController>();
 
         if (player != null)
         {
@@ -50,6 +47,7 @@ public class LauncherProjectile : MonoBehaviour
 
             player.AddImpulse(force);
 
+            SoundFX.Play("projectile_hit", transform.position);   
             Destroy(gameObject);
         }
     }

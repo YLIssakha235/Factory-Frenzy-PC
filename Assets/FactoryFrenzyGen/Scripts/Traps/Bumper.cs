@@ -20,7 +20,6 @@ public class Bumper : MonoBehaviour
 
         if (player == null) return;
 
-        // Direction opposée au bumper
         Vector3 direction = player.transform.position - transform.position;
         direction.y = 0f;
         direction = direction.normalized;
@@ -34,6 +33,6 @@ public class Bumper : MonoBehaviour
             bumperFX.Pulse();
         }
 
-        SoundFX.Play("bumper", transform.position); // [ajout] le son du bumper
+        SoundFX.Play("bumper", transform.position); 
     }
 }

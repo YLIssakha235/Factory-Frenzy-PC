@@ -1,15 +1,13 @@
 using UnityEngine;
 
-// Factory Frenzy – jump, landing, footsteps, fall and respawn sounds for the player.
-// Put it on PlayerArmature (the object with the CharacterController).
-// It only WATCHES the player's movement, so no other script needs to be changed.
+
 public class PlayerSounds : MonoBehaviour
 {
-    public float stepDistance = 1.6f;   // meters between two footsteps
+    public float stepDistance = 1.6f;   
 
     Vector3 lastPosition;
     bool wasOnGround = true;
-    float fallSpeed;                    // how fast we were falling (for the landing sound)
+    float fallSpeed;                    
     float airTime;
     bool fallSoundPlayed;
     float distanceSinceStep;
@@ -26,7 +24,6 @@ public class PlayerSounds : MonoBehaviour
         float jumpDistance = Vector3.Distance(transform.position, lastPosition);
         lastPosition = transform.position;
 
-        // RESPAWN: the player moved more than 5 m in one frame = teleported back to a checkpoint
         if (jumpDistance > 5f)
         {
             SoundFX.Play("respawn");
@@ -37,13 +34,10 @@ public class PlayerSounds : MonoBehaviour
 
         bool onGround = IsOnGround();
 
-        // JUMP: we just left the ground going up
         if (wasOnGround && !onGround && velocity.y > 2f) SoundFX.Play("jump");
 
-        // LAND: we just touched the ground after falling
         if (!wasOnGround && onGround && fallSpeed > 3f) SoundFX.Play("land", Mathf.Clamp01(fallSpeed / 12f));
 
-        // FALL: in the air for a long time and falling fast = we missed the platform
         if (onGround)
         {
             airTime = 0;
@@ -59,7 +53,6 @@ public class PlayerSounds : MonoBehaviour
             }
         }
 
-        // FOOTSTEPS: one step every stepDistance meters walked on the ground
         float horizontalSpeed = new Vector3(velocity.x, 0, velocity.z).magnitude;
         if (onGround && horizontalSpeed > 0.5f)
         {
@@ -75,7 +68,6 @@ public class PlayerSounds : MonoBehaviour
         wasOnGround = onGround;
     }
 
-    // a short ray down from the feet (a ray that starts inside our own collider does not hit it)
     bool IsOnGround()
     {
         return Physics.Raycast(transform.position + Vector3.up * 0.2f, Vector3.down, 0.35f, ~0, QueryTriggerInteraction.Ignore);

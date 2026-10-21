@@ -1,6 +1,5 @@
 using UnityEngine;
 
-// PC-TRA-T3 – the fan blades turn all the time.
 public class FanFX : MonoBehaviour
 {
     public float speed = 1500; // degrees per second

@@ -1,17 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// Factory Frenzy – plays any sound in ONE line, from anywhere:
-//     SoundFX.Play("jump");                          // 2D sound (UI, countdown, player)
-//     SoundFX.Play("bumper", transform.position);    // 3D sound at a position (traps)
-//     SoundFX.PlayMusic("music_loop");               // music, keeps playing between scenes
-// The sounds are the .wav files in Assets/Resources/Sounds/ (name without ".wav").
-// No need to put this script on an object: it creates its own when it is first used.
-//
-// Sound settings (Settings panel), saved on the computer with PlayerPrefs:
-//     allOn / masterVolume    -> every sound of the game
-//     musicOn / musicVolume   -> only the music
-//     effectsOn / effectsVolume -> only the sound effects
+
 public class SoundFX : MonoBehaviour
 {
     public static bool allOn = true;
@@ -27,7 +17,6 @@ public class SoundFX : MonoBehaviour
     AudioSource effects;
     AudioSource music;
 
-    // the volume really used for effects (0 when they are turned off)
     public static float EffectsVolume
     {
         get { return effectsOn ? effectsVolume : 0f; }
@@ -40,7 +29,7 @@ public class SoundFX : MonoBehaviour
             if (instance == null)
             {
                 GameObject go = new GameObject("SoundFX");
-                DontDestroyOnLoad(go);               // stays alive when we change scene (music continues)
+                DontDestroyOnLoad(go);              
                 instance = go.AddComponent<SoundFX>();
                 instance.effects = go.AddComponent<AudioSource>();
                 instance.music = go.AddComponent<AudioSource>();
@@ -51,7 +40,6 @@ public class SoundFX : MonoBehaviour
         }
     }
 
-    // ------------------------------------------------------------------ settings
 
     public static void LoadSettings()
     {
@@ -66,7 +54,6 @@ public class SoundFX : MonoBehaviour
         Apply();
     }
 
-    // call it after changing a setting: saves it and changes the volume right away
     public static void SaveAndApply()
     {
         PlayerPrefs.SetInt("SoundAllOn", allOn ? 1 : 0);
@@ -81,14 +68,11 @@ public class SoundFX : MonoBehaviour
 
     static void Apply()
     {
-        // AudioListener.volume = the volume of EVERYTHING the player hears
         AudioListener.volume = allOn ? masterVolume : 0f;
         if (instance != null) instance.music.volume = musicOn ? musicVolume : 0f;
     }
 
-    // ------------------------------------------------------------------ playing
 
-    // finds the sound in Resources/Sounds (loaded only once)
     public static AudioClip Get(string name)
     {
         if (!clips.ContainsKey(name))
@@ -100,15 +84,13 @@ public class SoundFX : MonoBehaviour
         return clips[name];
     }
 
-    // 2D sound: same volume everywhere
     public static void Play(string name, float volume = 1f)
     {
         AudioClip clip = Get(name);
         if (clip != null && EffectsVolume > 0f) Instance.effects.PlayOneShot(clip, volume * EffectsVolume);
     }
 
-    // 3D sound: louder when the player is close
-    // 3D sound: full volume within 8 m, then fades out until 40 m
+
     public static void Play(string name, Vector3 position, float volume = 1f)
     {
         LoadSettings();
@@ -120,19 +102,19 @@ public class SoundFX : MonoBehaviour
         AudioSource source = go.AddComponent<AudioSource>();
         source.clip = clip;
         source.volume = volume * EffectsVolume;
-        source.spatialBlend = 1f;                    // 3D
-        source.minDistance = 8f;                     // full volume up to 8 m (camera is ~5 m behind the player)
+        source.spatialBlend = 1f;                    
+        source.minDistance = 8f;                   
         source.maxDistance = 40f;
         source.rolloffMode = AudioRolloffMode.Linear;
         source.Play();
-        Destroy(go, clip.length + 0.1f);             // removed when the sound is finished
+        Destroy(go, clip.length + 0.1f);             
     }
 
     public static void PlayMusic(string name)
     {
         AudioClip clip = Get(name);
         AudioSource source = Instance.music;
-        if (clip == null || (source.clip == clip && source.isPlaying)) return; // already playing
+        if (clip == null || (source.clip == clip && source.isPlaying)) return; 
         source.clip = clip;
         source.volume = musicOn ? musicVolume : 0f;
         source.Play();

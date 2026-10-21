@@ -1,7 +1,6 @@
 using UnityEngine;
 
-// PC-PLA-P2 – the 3 lights on the start gate.
-// The countdown calls SetCountdown(3), (2), (1), then (0) for GO.
+
 public class StartLightsFX : MonoBehaviour
 {
     Renderer[] lights = new Renderer[3];
