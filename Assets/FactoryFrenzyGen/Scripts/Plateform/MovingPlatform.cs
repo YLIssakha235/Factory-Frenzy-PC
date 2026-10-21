@@ -15,11 +15,9 @@ public class MovingPlatform : MonoBehaviour
 
     void Start()
     {
-        // Enregistrer les positions
         startPosition = transform.position;
         endPosition = startPosition + endOffset;
 
-        // Recuperer le joueur
         player = FindObjectOfType<CharacterController>();
     }
 
@@ -28,19 +26,14 @@ public class MovingPlatform : MonoBehaviour
         if (travelTime <= 0f)
             return;
 
-        // Ancienne position de la plateforme
         Vector3 oldPosition = transform.position;
 
-        // Calcul du mouvement aller-retour
         elapsedTime += Time.deltaTime;
 
-        // Calculer la nouvelle position
-        Vector3 newPosition = Vector3.Lerp(
-            startPosition,
-            endPosition,
-            t
-
-
+        // Aller-retour entre 0 et 1
+        float t = Mathf.PingPong(
+            elapsedTime / travelTime,
+            1f
         );
 
         // Deplacement progressif
@@ -50,10 +43,9 @@ public class MovingPlatform : MonoBehaviour
             Mathf.SmoothStep(0f, 1f, t)
         );
 
-        // Calculer le deplacement effectue
         Vector3 movement = transform.position - oldPosition;
 
-        // Transporter le joueur s'il est dessus
+        // Transporter le joueur lorsqu'il est dessus
         if (player != null && player.enabled && IsPlayerOnTop())
         {
             player.Move(movement + Vector3.down * 0.05f);
