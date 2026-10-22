@@ -25,13 +25,17 @@ public class LauncherController : MonoBehaviour
     private Quaternion initialRotation;
     private float fireTimer;
     private RaceManager raceManager;
-    private bool playerInRange = false; 
+    private bool playerInRange = false;
+
+    private LauncherFX launcherFX;
+    private float fireEffectTimer = 0f;
 
     void Start()
     {
         
         player = null;
         ThirdPersonController controller = FindObjectOfType<ThirdPersonController>();
+
         if (controller != null)
         {
             player = controller.transform;
@@ -46,13 +50,18 @@ public class LauncherController : MonoBehaviour
         if (head == null) head = transform.Find("Head");
         if (muzzle == null && head != null) muzzle = head.Find("Muzzle");
 
-        if (player == null) //Debug.LogWarning("Launcher : joueur introuvable");
-        if (head == null || muzzle == null) //Debug.LogWarning("Launcher : Head ou Muzzle introuvable dans " + name);
+        if (player == null) Debug.LogWarning("Launcher : joueur introuvable");
+        if (head == null || muzzle == null) Debug.LogWarning("Launcher : Head ou Muzzle introuvable dans " + name);
 
         if (head != null)
             initialRotation = head.localRotation;
 
         raceManager = FindObjectOfType<RaceManager>();
+        launcherFX = GetComponent<LauncherFX>();
+
+        if(launcherFX == null)
+            launcherFX = GetComponentInParent<LauncherFX>();
+        
     }
 
     void Update()
@@ -63,12 +72,29 @@ public class LauncherController : MonoBehaviour
         if (head == null || player == null || muzzle == null)
             return;
 
+        if (fireEffectTimer > 0f)
+        {
+            fireEffectTimer -= Time.deltaTime;   
+        }
+
         Vector3 direction = player.position - head.position;
         direction.y = 0f;
+
+
 
         if (direction.magnitude > detectionRadius)
         {
             playerInRange = false;
+
+            if(launcherFX != null)
+            {
+                launcherFX.ShowSearch();
+            }
+
+            if(launcherFX != null && fireEffectTimer <= 0f)
+            {
+                launcherFX.ShowOrient();
+            }
 
             float angle = Mathf.PingPong(Time.time * searchSpeed, searchAngle * 2f) - searchAngle;
 
@@ -86,6 +112,11 @@ public class LauncherController : MonoBehaviour
         {
             playerInRange = true;
             SoundFX.Play("launcher_alert", transform.position);
+        }
+
+        if (launcherFX != null && fireEffectTimer <= 0f)
+        {
+            launcherFX.ShowOrient();
         }
 
         Vector3 cannonForward = muzzle.forward;
@@ -117,6 +148,13 @@ public class LauncherController : MonoBehaviour
         Vector3 shootDirection = (player.position + Vector3.up - muzzle.position).normalized;
 
         Instantiate(projectilePrefab, muzzle.position, Quaternion.LookRotation(shootDirection));
+
+        if(launcherFX != null)
+        {
+            launcherFX.Recoil();
+            launcherFX.ShowFire();
+            fireEffectTimer = 0.25f; 
+        }   
 
         SoundFX.Play("launcher_fire", transform.position); 
     }
