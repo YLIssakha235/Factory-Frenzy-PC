@@ -86,6 +86,36 @@ Le fonctionnement prévu est le suivant :
 4. Importation du fichier dans le jeu PC.
 5. Chargement et utilisation du parcours.
 
+## État du développement
+
+Les fonctionnalités prévues pour la partie PC ont été développées.
+
+### Fonctionnalités réalisées
+
+- [x] PC-PLA-P1 - Contrôleur TPS multijoueur
+- [x] PC-PLA-P2 - Plateforme de début de course
+- [x] PC-PLA-P3 - Plateforme de fin de course
+- [x] PC-PLA-P4 - Plateforme classique et gestion de la chute
+- [x] PC-PLA-P5 - Plateforme mobile
+- [x] PC-PLA-P6 - Plateforme trampoline
+- [x] PC-PLA-P7 - Checkpoint
+- [x] PC-TRA-T1 - Piège Bumper
+- [x] PC-TRA-T2 - Piège Lanceur
+- [x] PC-TRA-T3 - Piège Ventilateur
+- [x] PC-LOB-L1 - Lobby du jeu
+- [x] PC-LOB-L2 - Import du niveau créé en VR
+
+## Améliorations futures
+
+Même si les fonctionnalités prévues ont été développées, plusieurs améliorations restent possibles :
+
+- Améliorer les animations et les effets visuels
+- Ajouter de nouveaux obstacles et plateformes
+- Développer davantage de niveaux
+- Améliorer l'interface utilisateur
+- Optimiser les performances du jeu
+- Renforcer les tests de compatibilité entre les niveaux VR et PC
+
 ## Architecture du projet
 
 Le dépôt PC est organisé selon la structure standard d'un projet Unity.
